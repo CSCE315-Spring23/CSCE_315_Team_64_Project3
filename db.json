@@ -1,0 +1,58 @@
+{
+    "products": [
+        {
+            "id": 1,
+            "name": "Blueberry Heaven",
+            "price": "2",
+            "image": "https://skprod.objects.frb.io/images/smoothies/cups/_productSmall/sk-wellness-blueberry-heaven.png"
+        },
+        {
+            "id": 2,
+            "name": "Daily Warrior",
+            "price": "3",
+            "image": "https://skprod.objects.frb.io/images/smoothies/cups/_productSmall/sk-wellness-daily-warrior.png"
+        },
+        {
+            "id": 3,
+            "name": "Coffee D-Lite Mocha",
+            "price": "4",
+            "image": "https://skprod.objects.frb.io/images/smoothies/cups/_productSmall/sk-take-a-break-coffe-d-lite-mocha.png"
+        },
+        {
+            "id": 4,
+            "name": "The Hulk Vanilla",
+            "price": "10",
+            "image": "https://skprod.objects.frb.io/images/smoothies/cups/_productSmall/sk-fitness-hulk-vanilla.png"
+        },
+        {
+            "id": 5,
+            "name": "Coffee D-Lite Vanilla",
+            "price": "2",
+            "image": "https://skprod.objects.frb.io/images/smoothies/cups/_productSmall/sk-take-a-break-coffee-d-lite-vanilla.png"
+        },
+        {
+            "id": 6,
+            "name": "Coffee High Protein Almond Mocha",
+            "price": "4",
+            "image": "https://skprod.objects.frb.io/images/smoothies/cups/_productSmall/sk-fitness-coffee-high-protein-almond-mocha.png"
+        }, 
+        {
+            "id": 7,
+            "name": "Coffee High Protein Vanilla",
+            "price": "4",
+            "image": "https://skprod.objects.frb.io/images/smoothies/cups/_productSmall/sk-fitness-coffee-high-protein-vanilla.png"
+        },
+        {
+            "id": 8,
+            "name": "Espresso D-Lite™ Mocha",
+            "price": "4",
+            "image": "https://skprod.objects.frb.io/images/smoothies/cups/_productSmall/sk-take-a-break-coffe-d-lite-mocha.png"
+        },
+        {
+            "id": 9,
+            "name": "Espresso D-Lite™ Vanilla",
+            "price": "4",
+            "image": "https://skprod.objects.frb.io/images/smoothies/cups/_productSmall/sk-take-a-break-coffee-d-lite-vanilla.png"
+        }
+    ]
+}
