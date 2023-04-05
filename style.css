@@ -1,0 +1,123 @@
+﻿
+.element-default-white-element-default-white-wrapper { background-color: #ffffff;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+}
+.element-default-white-element-default-white {
+    background-color:
+    border: 1px none; height: 1311px;
+    position: relative;
+    width: 1920px;
+    #ffffff;
+}
+.element-default-white-smoothie-king-logo {
+    height: 471px;
+    left: 84px;
+    object-fit: cover;
+    position: absolute;
+    top: 34px;
+    width: 627px;
+}
+.element-default-white-overlap-group {
+    height: 1311px;
+    left: 940px;
+    position: absolute;
+    top: 0;
+    width: 980px;
+}
+﻿
+.element-default-white-smoothie-king-logo-2 {
+    height: 768px;
+    left: 170px;
+    object-fit: cover; position: absolute; top: 543px; width: 810px;
+}
+.element-default-white-smoothie-king-logo-3 {
+}
+    height: 786px;
+    left: 205px;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    width: 775px;
+    .element-default-white-smoothieking {
+    height: 732px;
+    left: 0;
+    object-fit: cover;
+    position: absolute;
+    top: 259px;
+    width: 906px;
+}
+﻿
+
+.element-default-white-addtocart {
+    align-items: center;
+    background-color: #a7a6a6;
+    border-radius: 20px;
+    box-shadow: 0px 10px 20px #44444466;
+    display: flex;
+    flex-direction: column;
+    height: 90px;
+    justify-content: center;
+    left: 240px;
+    padding: 15px 20px;
+    position: absolute;
+    top: 751px;
+    width: 315px;
+}
+.element-default-white-text-wrapper {
+    color: #ffffff;
+    font-family: "Poppins", Helvetica;
+    font-size: 42px;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 20px;
+    position: relative;
+    text-align: center;
+    white-space: nowrap;
+    width: 186px;
+}
+﻿
+
+.element-default-white-div-wrapper {
+    align-items: center;
+    background-color: #a7a6a6;
+    border-radius: 20px;
+    box-shadow: 0px 10px 20px #44444466;
+    display: flex;
+    flex-direction: column;
+    height: 90px;
+    justify-content: center;
+    left: 240px;
+    padding: 15px 20px; position: absolute;
+    top: 1059px;
+    width: 315px;
+}
+.element-default-white-div {
+    align-items: center;
+    background-color: #a7a6a6;
+    border-radius: 20px;
+    box-shadow: 0px 10px 20px #44444466;
+    display: flex;
+    flex-direction: column;
+    height: 90px;
+    justify-content: center;
+    left: 240px;
+    padding: 15px 20px;
+    position: absolute;
+    top: 900px;
+    width: 315px;
+}
+﻿
+
+.element-default-white-h-1 {
+    color: #a93439;
+    font-family: "Poppins", Helvetica;
+    font-size: 80px; font-weight: 700; height: 131px; left: 143px; letter-spacing: 0; line-height: 20px;
+    position: absolute;
+    text-align: center;
+    text-decoration: underline;
+    top: 520px;
+    width: 509px;
+}

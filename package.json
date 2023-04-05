@@ -1,0 +1,25 @@
+{
+  "name": "smoothie-king-react-app",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "init proj",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CSCE315-Spring23/CSCE_315_Team_64_Project3.git"
+  },
+  "author": "logt",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CSCE315-Spring23/CSCE_315_Team_64_Project3/issues"
+  },
+  "homepage": "https://github.com/CSCE315-Spring23/CSCE_315_Team_64_Project3#readme"
+}
