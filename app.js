@@ -6,6 +6,7 @@ function App() {
       <Switch>
         <Route exact path="/" component={IntroScreen} />
         <Route exact path="/menu" component={Menu} />
+        <Route exact path="/manager" component={Inventory} />
         <Route exact path="/locations" component={Locations} />
         <Route exact path="/rewards" component={Rewards} />
       </Switch>
