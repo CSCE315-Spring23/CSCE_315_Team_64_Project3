@@ -1,4 +1,4 @@
-/GUI.class
+s/GUI.class
 /jdbcpostgreSQL.class
 /dbSetup.class
 /Smoothie.class
@@ -30,3 +30,4 @@
 /XReport.class
 /ZReport$Clicker.class
 /ZReport.class
+node_modules
