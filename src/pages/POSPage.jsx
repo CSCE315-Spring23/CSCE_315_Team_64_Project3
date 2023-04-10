@@ -5,6 +5,14 @@ import { toast } from 'react-toastify';
 import { ComponentToPrint } from '../components/ComponentToPrint';
 import { useReactToPrint } from 'react-to-print';
 
+function updateTransaction(trans_date, trans_dayofweek, trans_price, sm_name) {
+  return fetch('/orders', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ trans_date, trans_dayofweek, sm_name, trans_price }),
+  }).then((response) => response.json());
+} 
+
 function POSPage() {
 
   const [products, setProducts] = useState([]);
@@ -75,7 +83,10 @@ function POSPage() {
   });
 
   const handlePrint = () => {
-    handleReactToPrint();
+    handleReactToPrint(); 
+    cart.forEach(cartItem => {
+      updateTransaction("4/9/2023", "Sunday", cartItem.totalAmount, cartItem.name)
+    });
   }
 
   useEffect(() => {
@@ -99,7 +110,7 @@ function POSPage() {
           {isLoading ? 'Loading' : <div className='row'>
               {products.map((product, key) =>
                 <div key={key} className='col-lg-3 mb-5'>
-                  <div className='pos-item px-3 text-center border' onClick={() => addProductToCart(product)}>
+                  <div className='pos-item px-0 text-center border' onClick={() => addProductToCart(product)}>
                       <p>{product.name}</p>
                       <img src={product.image} className="img-fluid" alt={product.name} />
                       <p>${product.price}</p>
@@ -142,13 +153,13 @@ function POSPage() {
                     : 'No Item in Cart'}
                   </tbody>
                 </table>
-                <h2 className='px-2 text-white'>Total Amount: ${totalAmount}</h2>
+                <h2 className='px-2 text-white'>Total Cost: ${totalAmount}</h2>
               </div>
 
               <div className='mt-3'>
                 { totalAmount !== 0 ? <div>
                   <button className='btn btn-primary' onClick={handlePrint}>
-                    Pay Now
+                    Checkout
                   </button>
 
                 </div> : 'Please add a product to the cart'
