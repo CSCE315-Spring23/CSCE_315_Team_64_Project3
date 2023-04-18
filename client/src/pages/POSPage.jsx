@@ -6,7 +6,7 @@ import { ComponentToPrint } from '../components/ComponentToPrint';
 import { useReactToPrint } from 'react-to-print';
 
 function updateTransaction(trans_date, trans_dayofweek, trans_price, sm_name) {
-  return fetch('/orders', {
+  return fetch('http://localhost:8000/orders', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ trans_date, trans_dayofweek, sm_name, trans_price }),
@@ -85,7 +85,7 @@ function POSPage() {
   const handlePrint = () => {
     handleReactToPrint(); 
     cart.forEach(cartItem => {
-      updateTransaction("4/9/2023", "Sunday", cartItem.totalAmount, cartItem.name)
+      updateTransaction("4/17/2023", "Sunday", cartItem.totalAmount, cartItem.name)
     });
   }
 
