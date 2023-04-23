@@ -1,10 +1,18 @@
+
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const corsOptions ={
+  origin:'*', 
+  credentials:true,            //access-control-allow-credentials:true
+  optionSuccessStatus:200,
+}
 const pool = require("./db");
 
-//middleware
-app.use(cors());
+app.use(
+  cors(corsOptions)
+);
+
 app.use(express.json()); //req.body
 
 //ROUTES//
@@ -40,3 +48,15 @@ app.post("/orders", async (req, res) => {
         res.status(500).send('Internal server error');
     }
 });
+
+app.get("/smoothies", async (req, res) => {
+  res.set('Access-Control-Allow-Origin', '*');
+  try {
+    const allSmoothies = await pool.query("SELECT * FROM smoothies;");
+    res.json(allSmoothies.rows);
+  } catch (err) {
+    console.error("ERROR GETTING SMOOTHIES");
+  }
+});
+
+

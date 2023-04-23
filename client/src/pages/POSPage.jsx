@@ -26,14 +26,30 @@ function POSPage() {
   }
 
   const fetchProducts = async() => {
+    try {
+      const response = await fetch("http://localhost:8000/smoothies")
+      const jsonData = await response.json()
+      setProducts(jsonData)
+      console.log(jsonData)
+    } catch (err) {
+      console.log(err.message)
+    }
+  }
+
+  useEffect(() => {
+    fetchProducts();
+  }, [])
+
+
+  /*const fetchProducts = async() => {
     setIsLoading(true);
     const result = await axios.get('products');
     console.log(result)
     setProducts(await result.data);
     setIsLoading(false);
-  }
+  }*/
 
-  const addProductToCart = async(product) =>{
+  const addProductToCart = async(product) => {
     // check if the adding product exist
     let findProductInCart = await cart.find(i=>{
       return i.id === product.id
@@ -111,9 +127,9 @@ function POSPage() {
               {products.map((product, key) =>
                 <div key={key} className='col-lg-3 mb-5'>
                   <div className='pos-item px-0 text-center border' onClick={() => addProductToCart(product)}>
-                      <p>{product.name}</p>
-                      <img src={product.image} className="img-fluid" alt={product.name} />
-                      <p>${product.price}</p>
+                      <p>{product.sm_name}</p>
+                      <img src={product.image} className="img-fluid" alt={product.sm_name} />
+                      <p>${product.sm_price}</p>
                   </div>
 
                 </div>

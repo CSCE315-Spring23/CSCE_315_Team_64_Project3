@@ -24,10 +24,6 @@
 //     }
 // });
 
-
-
-
-// change later
 const pool = require('./db');
 
 const getSmoothies = (request, response) => {
