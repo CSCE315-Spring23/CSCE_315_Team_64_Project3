@@ -187,6 +187,7 @@ function POSPage() {
         </div>
       </div>
     </MainLayout>
+   
   )
 }
 

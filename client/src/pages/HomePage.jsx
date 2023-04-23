@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-
+import { GoogleLogin } from '@react-oauth/google';
 import {Link} from 'react-router-dom'
 import MainLayout from '../layouts/MainLayout'
 
@@ -47,11 +47,24 @@ function HomePage() {
                 Forgot <a href="#">password?</a>
               </p>
             </div>
+            <div className="d-grid gap-2 mt-3">
+              <GoogleLogin className = 'form-control mt-1'
+                onSuccess={credentialResponse => {
+                  console.log(credentialResponse);
+                }}
+                onError={() => {
+                  console.log('Login Failed');
+                }}
+              />
+            </div>
           </form>
+          
         </div>
       </div>
     </MainLayout>
   )
 }
+
+
 
 export default HomePage
