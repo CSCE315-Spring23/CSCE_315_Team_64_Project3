@@ -32,12 +32,19 @@ function CustomerPage() {
   }
 
   const fetchProducts = async() => {
-    setIsLoading(true);
-    const result = await axios.get('products');
-    console.log(result)
-    setProducts(await result.data);
-    setIsLoading(false);
+    try {
+      const response = await fetch("http://localhost:8000/smoothies")
+      const jsonData = await response.json()
+      setProducts(jsonData)
+      console.log(jsonData)
+    } catch (err) {
+      console.log(err.message)
+    }
   }
+
+  useEffect(() => {
+    fetchProducts();
+  }, [])
 
   const addProductToCart = async(product) =>{
     // check if the adding product exist
@@ -77,7 +84,7 @@ function CustomerPage() {
 
   }
 
-  const removeProduct = async(product) =>{
+  const removeProduct = async(product) => {
     const newCart =cart.filter(cartItem => cartItem.id !== product.id);
     setCart(newCart);
   }
@@ -92,9 +99,6 @@ function CustomerPage() {
     handleReactToPrint();
   }
 
-  useEffect(() => {
-    fetchProducts();
-  },[]);
 
   useEffect(() => {
     let newTotalAmount = 0;
@@ -170,9 +174,9 @@ function CustomerPage() {
                 if (product.type == productType) {
                   return <div key={key} className='col-lg-3 mb-5'>
                     <div className='pos-item px-3 text-center border' onClick={() => addProductToCart(product)}>
-                      <p>{product.name}</p>
-                      <img src={product.image} className="img-fluid" alt={product.name} />
-                      <p>${product.price}</p>
+                      <p>{product.sm_name}</p>
+                      <img src={product.image} className="img-fluid" alt={product.sm_name} />
+                      <p>${product.sm_price}</p>
                     </div>
                   </div>
                 }
