@@ -9,24 +9,48 @@ export default class AddInventory extends Component{
         this.state = {
             products: []
         }
-        this.formData = createRef();
-    }8
+        this.fetchProducts()
+    }
+
+    fetchProducts = async() => {
+        try {
+          const response = await fetch("http://localhost:8000/inventory")
+          const jsonData = await response.json()
+          await this.setState({
+            products: jsonData
+          });
+          this.state.products = jsonData
+          console.log(this.state.products)
+        } catch (err) {
+          console.log(err.message)
+        }
+    }
+
+    updateTransaction(item_quantitylbs, item_name, item_ppp) { // Adding a new item to the database
+        return fetch('http://localhost:8000/inventory', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ item_quantitylbs, item_name, item_ppp }),
+        }).then((response) => response.json());
+    } 
     
     // addproduct handler method
     add = (event) => {
         event.preventDefault();
         //console.log(formData.current)
         const newProduct = {
-            product_name: this.formData.current.product_name.value,
-            price: this.formData.current.price.value,
-            qty: Number(this.formData.current.qty.value)
+            item_name: this.formData.current.product_name.value,
+            item_ppp: this.formData.current.price.value,
+            item_quantitylbs: Number(this.formData.current.qty.value)
         }
+
+        //this.updateTransaction(newProduct.item_quantitylbs, newProduct.item_name, newProduct.item_ppp)
         // add a new product inside products array
-        this.state.products.push(newProduct);
-        this.setState({
-            products: this.state.products
-        });
-        //console.log(products);
+        //this.state.products.push(newProduct);
+        //this.setState({
+            //products: this.state.products
+        //});
+        
     }
     // increment qty value by 1
     increQty = (event) => {
@@ -111,9 +135,9 @@ export default class AddInventory extends Component{
                                 return (
                                     <tr key={index}>
                                         {/* <td>{index}</td> */}
-                                        <td>{item.product_name}</td>
-                                        <td>{item.price}</td>
-                                        <td>{item.qty}</td>
+                                        <td>{item.item_name}</td>
+                                        <td>{item.item_ppp}</td>
+                                        <td>{item.item_quantitylbs}</td>
                                         <td class="spacer">
                                             <Button onMouseEnter={(this.changeBackground)} onMouseLeave={(this.changeAddBack)} variant="success" onClick={event => this.increQty(event)} value={index}>+</Button>
                                             <Button onMouseEnter={(this.changeBackground)} onMouseLeave={(this.changeSubBack)} variant="danger" onClick={event => this.decreQty(event)} value={index}>-</Button>

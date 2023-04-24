@@ -49,6 +49,30 @@ app.post("/orders", async (req, res) => {
     }
 });
 
+app.post("/inventory", async (req, res) => {
+  try {
+      const {item_quantitylbs, item_name, item_ppp} = req.body;
+      let trans_id = 0
+      await pool.query(
+          'SELECT COUNT(*) FROM items;',
+          (err, res) => {
+            if (err) {
+              console.error(err);
+            } else {
+              item_id = res.rows[0].count + 1;
+              const query = 'INSERT INTO items (item_id, item_quantitylbs, item_name, item_ppp) VALUES ($1, $2, $3, $4)';
+              const values = [item_id, item_quantitylbs, item_name, item_ppp];
+              pool.query(query, values);
+              pool.end()
+            }
+          }
+      );
+  } catch (err) {
+      console.error(err);
+      res.status(500).send('Internal server error');
+  }
+});
+
 app.get("/smoothies", async (req, res) => {
   res.set('Access-Control-Allow-Origin', '*');
   try {
@@ -56,6 +80,16 @@ app.get("/smoothies", async (req, res) => {
     res.json(allSmoothies.rows);
   } catch (err) {
     console.error("ERROR GETTING SMOOTHIES");
+  }
+});
+
+app.get("/inventory", async (req, res) => {
+  res.set('Access-Control-Allow-Origin', '*');
+  try {
+    const allItems = await pool.query("SELECT * FROM items;")
+    res.json(allItems.rows);
+  } catch (err) {
+    console.error("ERROR GETTING ITEMS");
   }
 });
 

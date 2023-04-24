@@ -30,7 +30,9 @@ function POSPage() {
       const response = await fetch("http://localhost:8000/smoothies")
       const jsonData = await response.json()
       setProducts(jsonData)
-      console.log(jsonData)
+      for (let i = 0; i < products.length; i++) {
+        products[i].sm_price = products[i].sm_price.toFixed(2)
+      }
     } catch (err) {
       console.log(err.message)
     }
@@ -52,7 +54,7 @@ function POSPage() {
   const addProductToCart = async(product) => {
     // check if the adding product exist
     let findProductInCart = await cart.find(i=>{
-      return i.id === product.id
+      return i.sm_id === product.sm_id
     });
 
     if(findProductInCart){
@@ -60,11 +62,11 @@ function POSPage() {
       let newItem;
 
       cart.forEach(cartItem => {
-        if(cartItem.id === product.id){
+        if(cartItem.sm_id === product.sm_id){
           newItem = {
             ...cartItem,
             quantity: cartItem.quantity + 1,
-            totalAmount: cartItem.price * (cartItem.quantity + 1)
+            totalAmount: cartItem.sm_price * (cartItem.quantity + 1)
           }
           newCart.push(newItem);
         }else{
@@ -73,22 +75,22 @@ function POSPage() {
       });
 
       setCart(newCart);
-      toast(`Added ${newItem.name} to cart`,toastOptions)
+      toast(`Added ${newItem.sm_name} to cart`,toastOptions)
 
     }else{
       let addingProduct = {
         ...product,
         'quantity': 1,
-        'totalAmount': product.price,
+        'totalAmount': product.sm_price,
       }
       setCart([...cart, addingProduct]);
-      toast(`Added ${product.name} to cart`, toastOptions)
+      toast(`Added ${product.sm_name} to cart`, toastOptions)
     }
 
   }
 
   const removeProduct = async(product) =>{
-    const newCart =cart.filter(cartItem => cartItem.id !== product.id);
+    const newCart =cart.filter(cartItem => cartItem.sm_id !== product.sm_id);
     setCart(newCart);
   }
 
@@ -101,7 +103,7 @@ function POSPage() {
   const handlePrint = () => {
     handleReactToPrint(); 
     cart.forEach(cartItem => {
-      updateTransaction("4/17/2023", "Sunday", cartItem.totalAmount, cartItem.name)
+      updateTransaction("4/17/2023", "Sunday", cartItem.totalAmount, cartItem.sm_name)
     });
   }
 
@@ -116,8 +118,6 @@ function POSPage() {
     })
     setTotalAmount(newTotalAmount);
   },[cart])
-
-
 
   return (
     <MainLayout>
@@ -155,9 +155,9 @@ function POSPage() {
                   </thead>
                   <tbody>
                     { cart ? cart.map((cartProduct, key) => <tr key={key}>
-                      <td>{cartProduct.id}</td>
-                      <td>{cartProduct.name}</td>
-                      <td>${cartProduct.price}</td>
+                      <td>{cartProduct.sm_id}</td>
+                      <td>{cartProduct.sm_name}</td>
+                      <td>${cartProduct.sm_price}</td>
                       <td>{cartProduct.quantity}</td>
                       <td>${cartProduct.totalAmount}</td>
                       <td>

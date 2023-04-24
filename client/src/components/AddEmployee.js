@@ -9,8 +9,20 @@ export default class AddEmployee extends Component{
         this.state = {
             products: []
         }
-        this.formData = createRef();
-    }8
+        this.fetchProducts()
+    }
+
+    fetchProducts = async() => {
+        try {
+          const response = await fetch("http://localhost:8000/inventory")
+          const jsonData = await response.json()
+          this.setState({
+            products: jsonData
+          });
+        } catch (err) {
+          console.log(err.message)
+        }
+    }
     
     // addproduct handler method
     add = (event) => {
