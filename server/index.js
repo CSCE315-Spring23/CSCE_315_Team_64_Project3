@@ -39,7 +39,6 @@ app.post("/orders", async (req, res) => {
                 const query = 'INSERT INTO transactions (trans_id, trans_date, trans_dayofweek, sm_name, trans_size, trans_price, trans_cost) VALUES ($1, $2, $3, $4, $5, $6, $7)';
                 const values = [trans_id, trans_date, trans_dayofweek, sm_name, "small", trans_price, trans_price];
                 pool.query(query, values);
-                pool.end()
               }
             }
         );
@@ -51,6 +50,7 @@ app.post("/orders", async (req, res) => {
 
 app.post("/inventory", async (req, res) => {
   try {
+      console.log(1)
       const {item_quantitylbs, item_name, item_ppp} = req.body;
       let trans_id = 0
       await pool.query(
@@ -63,7 +63,6 @@ app.post("/inventory", async (req, res) => {
               const query = 'INSERT INTO items (item_id, item_quantitylbs, item_name, item_ppp) VALUES ($1, $2, $3, $4)';
               const values = [item_id, item_quantitylbs, item_name, item_ppp];
               pool.query(query, values);
-              pool.end()
             }
           }
       );

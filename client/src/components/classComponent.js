@@ -10,6 +10,7 @@ export default class AddInventory extends Component{
             products: []
         }
         this.fetchProducts()
+        this.formData = createRef();
     }
 
     fetchProducts = async() => {
@@ -19,8 +20,6 @@ export default class AddInventory extends Component{
           await this.setState({
             products: jsonData
           });
-          this.state.products = jsonData
-          console.log(this.state.products)
         } catch (err) {
           console.log(err.message)
         }
@@ -37,20 +36,18 @@ export default class AddInventory extends Component{
     // addproduct handler method
     add = (event) => {
         event.preventDefault();
-        //console.log(formData.current)
         const newProduct = {
             item_name: this.formData.current.product_name.value,
             item_ppp: this.formData.current.price.value,
             item_quantitylbs: Number(this.formData.current.qty.value)
         }
 
-        //this.updateTransaction(newProduct.item_quantitylbs, newProduct.item_name, newProduct.item_ppp)
+        this.updateTransaction(newProduct.item_quantitylbs, newProduct.item_name, newProduct.item_ppp)
         // add a new product inside products array
-        //this.state.products.push(newProduct);
-        //this.setState({
-            //products: this.state.products
-        //});
-        
+        this.state.products.push(newProduct);
+        this.setState({
+            products: this.state.products
+        }); 
     }
     // increment qty value by 1
     increQty = (event) => {
