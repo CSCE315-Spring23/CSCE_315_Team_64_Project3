@@ -1,0 +1,21 @@
+.product {
+    color:lightcoral;
+    font-weight: 200;
+    font-size: 2.5rem;
+}
+.product2 {
+    color:lightcoral;
+    font-weight: 200;
+    font-size: 1.5rem;
+}
+.addButton {
+    margin: 1rem;
+}
+.spacer {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+.nav_container {
+    box-shadow: 10;
+}
