@@ -148,20 +148,23 @@ function CustomerPage() {
           </div>
           <div className='row'>
             {isLoading ? 'Loading' : <div className='row'>
-              <div className='pos-item px-3 text-center border' onClick={() => setProductType('Feel Energized')}>
-                <p>Feel Energized</p>
+              <div className='pos-item px-3 text-center border' onClick={() => setProductType('coffee')}>
+                <p>Coffee</p>
               </div>
-              <div className='pos-item px-3 text-center border' onClick={() => setProductType('Get Fit')}>
-                <p>Get Fit</p>
+              <div className='pos-item px-3 text-center border' onClick={() => setProductType('strawberry')}>
+                <p>Strawberry</p>
               </div>
-              <div className='pos-item px-3 text-center border' onClick={() => setProductType('Manage Weight')}>
-                <p>Manage Weight</p>
+              <div className='pos-item px-3 text-center border' onClick={() => setProductType('blueberry')}>
+                <p>Blueberry</p>
               </div>
-              <div className='pos-item px-3 text-center border' onClick={() => setProductType('Be Well')}>
-                <p>Be Well</p>
+              <div className='pos-item px-3 text-center border' onClick={() => setProductType('greens')}>
+                <p>Greens</p>
               </div>
-              <div className='pos-item px-3 text-center border' onClick={() => setProductType('Enjoy a Treat')}>
-                <p>Enjoy a Treat</p>
+              <div className='pos-item px-3 text-center border' onClick={() => setProductType('mango')}>
+                <p>Mango</p>
+              </div>
+              <div className='pos-item px-3 text-center border' onClick={() => setProductType('raspberry')}>
+                <p>Raspberry</p>
               </div>
             </div>}
           </div>
@@ -171,11 +174,11 @@ function CustomerPage() {
           <div className='row'>
             {isLoading ? 'Loading' : <div className='row'>
               {products.map((product, key) => {
-                if (product.type == productType) {
+                if (product.sm_type == productType) {
                   return <div key={key} className='col-lg-3 mb-5'>
                     <div className='pos-item px-3 text-center border' onClick={() => addProductToCart(product)}>
                       <p>{product.sm_name}</p>
-                      <img src={product.image} className="img-fluid" alt={product.sm_name} />
+                      <img src={product.sm_img} className="img-fluid" alt={product.sm_name} />
                       <p>${product.sm_price}</p>
                     </div>
                   </div>
