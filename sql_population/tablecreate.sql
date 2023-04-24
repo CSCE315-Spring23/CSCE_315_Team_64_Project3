@@ -5,11 +5,14 @@ CREATE TABLE items(
     item_ppp float
 );
 
+-- redo table in database and add imgs for each
 CREATE TABLE smoothies(
     sm_id int PRIMARY KEY,
     sm_name text,
     sm_price float,
-    sm_ingredients text
+    sm_ingredients text,
+    sm_img text,
+    sm_type text
 );
 
 CREATE TABLE shift(
@@ -54,6 +57,16 @@ CREATE TABLE transactions_summary(
     transsum_rev float,
     transsum_expenditures float,
     transsum_profit float
+);
+
+-- table for oauth
+-- view as text for each assigned view
+-- "customer", "clerk", "manager", "menu"
+CREATE TABLE oauth (
+    oauth_email text PRIMARY KEY, 
+    oauth_pass text, 
+    oauth_usr text,
+    oauth_view text
 );
 
 
