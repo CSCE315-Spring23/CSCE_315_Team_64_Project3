@@ -25,24 +25,41 @@ export default class AddInventory extends Component{
         }
     }
 
-    updateTransaction(item_quantitylbs, item_name, item_ppp) { // Adding a new item to the database
+    AddItem(item_quantitylbs, item_name, item_ppp) { // Adding a new item to the database
         return fetch('http://localhost:8000/inventory', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ item_quantitylbs, item_name, item_ppp }),
         }).then((response) => response.json());
     } 
+
+    DeleteItem(item_id) { // Deleting an item from the database
+        return fetch('http://localhost:8000/inventory', {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({item_id}),
+        }).then((response) => response.json());
+    } 
+
+    IncrementItem(item_id, val) {
+        return fetch('http://localhost:8000/inventory/:item_id"', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({item_id, val}),
+        }).then((response) => response.json());
+    }
     
     // addproduct handler method
     add = (event) => {
         event.preventDefault();
         const newProduct = {
+            item_id: this.state.products.length + 1, 
             item_name: this.formData.current.product_name.value,
             item_ppp: this.formData.current.price.value,
             item_quantitylbs: Number(this.formData.current.qty.value)
         }
 
-        this.updateTransaction(newProduct.item_quantitylbs, newProduct.item_name, newProduct.item_ppp)
+        this.AddItem(newProduct.item_quantitylbs, newProduct.item_name, newProduct.item_ppp)
         // add a new product inside products array
         this.state.products.push(newProduct);
         this.setState({
@@ -53,7 +70,8 @@ export default class AddInventory extends Component{
     increQty = (event) => {
         //console.log(event.target.value)
         const indexOfArray = event.target.value;
-        this.state.products[indexOfArray].qty = this.state.products[indexOfArray].qty + 1;
+        this.state.products[indexOfArray].item_quantitylbs = this.state.products[indexOfArray].item_quantitylbs + 1;
+        this.IncrementItem(this.state.products[indexOfArray].item_id, 1)
         this.setState({
             products: this.state.products
         });
@@ -64,15 +82,17 @@ export default class AddInventory extends Component{
         if (this.state.products[indexOfArray].qty == 0) {
             return;
         }
-        this.state.products[indexOfArray].qty = this.state.products[indexOfArray].qty - 1;
+        this.state.products[indexOfArray].item_quantitylbs = this.state.products[indexOfArray].item_quantitylbs - 1;
+
+        this.IncrementItem(this.state.products[indexOfArray].item_id, -1)
         this.setState({
             products: this.state.products
         });
     }
     delVal = (event) => {
         const indexOfArray = event.target.value;
+        this.DeleteItem(this.state.products[indexOfArray].item_id)
         delete this.state.products[indexOfArray];
-        
         this.setState({
             products: this.state.products
         });
