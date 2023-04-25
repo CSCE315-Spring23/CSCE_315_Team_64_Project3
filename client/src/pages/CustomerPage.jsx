@@ -15,16 +15,19 @@ function CustomerPage() {
   const [totalAmount, setTotalAmount] = useState(0);
   const [productType, setProductType] = useState('Be Well');
   const [weather, setWeather] = useState({});
+  const [currTemp, setCurrTemp] = useState(0);
 
   useEffect(() => {
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', 'http://api.openweathermap.org/data/2.5/weather?lat=30.628&lon=-96.334&units=imperial&appid=9de1668fb9051d4f3fd35b6886e6edf9')
+    xhr.open('GET', 'http://api.openweathermap.org/data/2.5/weather?lat=30.628&lon=-96.334&units=imperial&appid=703f1d8f031ba9041b4de2e90e795853')
     xhr.send();
     xhr.onload = () => {
       const data = JSON.parse(xhr.response);
       setWeather(data);
+      setCurrTemp(JSON.parse(JSON.stringify(data['main']))['temp']);
+      console.log(JSON.parse(JSON.stringify(data['main']))['temp'])
     };
-  });
+  }, []);
 
   const toastOptions = {
     autoClose: 400,
@@ -141,7 +144,7 @@ function CustomerPage() {
         <div className='col-lg-8'>
         <div className='row'>
             <h2>Today's Weather</h2>
-            <h3>{JSON.stringify(weather) + ' degrees Fahrenheit'}</h3>
+            <h3>{currTemp + ' degrees Fahrenheit'}</h3>
           </div>
           <div className='row'>
             <h2>Smoothie Types</h2>
