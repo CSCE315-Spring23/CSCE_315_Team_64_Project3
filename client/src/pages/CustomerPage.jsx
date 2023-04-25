@@ -7,6 +7,7 @@ import { useReactToPrint } from 'react-to-print';
 
 function CustomerPage() {
 
+  {/* Define variables */}
   const [smoothieTypes, setSmoothieTypes] = useState(['Feel Energized', 'Get Fit', 'Manage Weight', 'Be Well', 'Enjoy a Treat']);
   const [products, setProducts] = useState([]);
   const [items, setItems] = useState(['Napkins', 'Cups', 'Straws']);
@@ -14,18 +15,26 @@ function CustomerPage() {
   const [cart, setCart] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
   const [productType, setProductType] = useState('Be Well');
-  const [weather, setWeather] = useState({});
+  const [weather, setWeather] = useState('');
   const [currTemp, setCurrTemp] = useState(0);
+  const [highTemp, setHighTemp] = useState(0);
+  const [lowTemp, setLowTemp] = useState(0);
+  const [humidity, setHumidity] = useState(0);
 
+  {/* Call weather API once upon mounting */}
   useEffect(() => {
     const xhr = new XMLHttpRequest();
     xhr.open('GET', 'http://api.openweathermap.org/data/2.5/weather?lat=30.628&lon=-96.334&units=imperial&appid=703f1d8f031ba9041b4de2e90e795853')
     xhr.send();
     xhr.onload = () => {
+      {/* Set data from API call locally */}
       const data = JSON.parse(xhr.response);
-      setWeather(data);
+      setWeather(JSON.parse(JSON.stringify(data['weather'][0]))['description']);
       setCurrTemp(JSON.parse(JSON.stringify(data['main']))['temp']);
-      console.log(JSON.parse(JSON.stringify(data['main']))['temp'])
+      setHighTemp(JSON.parse(JSON.stringify(data['main']))['temp_max']);
+      setLowTemp(JSON.parse(JSON.stringify(data['main']))['temp_min']);
+      setHumidity(JSON.parse(JSON.stringify(data['main']))['humidity']);
+      console.log(data)
     };
   }, []);
 
@@ -34,6 +43,7 @@ function CustomerPage() {
     pauseOnHover: true,
   }
 
+  {/* Get Smoothies from Backend */}
   const fetchProducts = async() => {
     try {
       const response = await fetch("http://localhost:8000/smoothies")
@@ -49,12 +59,14 @@ function CustomerPage() {
     fetchProducts();
   }, [])
 
+  {/* Add a smoothie to the customer cart */}
   const addProductToCart = async(product) =>{
     // check if the adding product exist
     let findProductInCart = await cart.find(i=>{
       return i.id === product.id
     });
 
+    {/* Increment the count on the quantity for the smoothie */}
     if(findProductInCart){
       let newCart = [];
       let newItem;
@@ -72,9 +84,11 @@ function CustomerPage() {
         }
       });
 
+      {/* Set the cart and display the update */}
       setCart(newCart);
       toast(`Added ${newItem.name} to cart`,toastOptions)
 
+    {/* Copy over items into a new cart array */}
     }else{
       let addingProduct = {
         ...product,
@@ -87,6 +101,7 @@ function CustomerPage() {
 
   }
 
+  {/* Remove smoothie from the cart */}
   const removeProduct = async(product) => {
     const newCart =cart.filter(cartItem => cartItem.id !== product.id);
     setCart(newCart);
@@ -103,6 +118,7 @@ function CustomerPage() {
   }
 
 
+  {/* Update the cart total */}
   useEffect(() => {
     let newTotalAmount = 0;
     cart.forEach(icart => {
@@ -111,6 +127,7 @@ function CustomerPage() {
     setTotalAmount(newTotalAmount);
   },[cart])
 
+  {/* Add the google translate element to the document */}
   function addTranslateScript() {
     var addScript = document.createElement("script");
       addScript.setAttribute(
@@ -121,6 +138,7 @@ function CustomerPage() {
       window.googleTranslateElementInit = googleTranslateElementInit;
   };
 
+  {/* Create google translate element and initialize it to english */}
   const googleTranslateElementInit = () => {
     new window.google.translate.TranslateElement(
       {
@@ -131,11 +149,13 @@ function CustomerPage() {
     );
   };
 
+  {/* Add google translate script upon mounting */}
   const useMountEffect = (fun) => useEffect(fun, [])
   {
     useMountEffect(addTranslateScript);
   }
 
+  {/* Main page HTML */}
   return (
     <MainLayout>
     <div id="google_translate_element"></div>
@@ -144,7 +164,11 @@ function CustomerPage() {
         <div className='col-lg-8'>
         <div className='row'>
             <h2>Today's Weather</h2>
-            <h3>{currTemp + ' degrees Fahrenheit'}</h3>
+            <h3>{'Temperature Now: ' + currTemp + ' degrees Fahrenheit'}</h3>
+            <h3>{'Weather: ' + weather}</h3>
+            <h3>{'Humidity: ' + humidity}</h3>
+            <h3>{'High Temperature: ' + highTemp + ' degrees Fahrenheit'}</h3>
+            <h3>{'Low Temperature: ' + lowTemp + ' degrees Fahrenheit'}</h3>
           </div>
           <div className='row'>
             <h2>Smoothie Types</h2>
