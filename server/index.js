@@ -68,6 +68,21 @@ app.post("/inventory", async (req, res) => { //Listening for added inventory ite
   }
 });
 
+app.post("/employees", async (req, res) => { //Listening for added inventory items
+  try {
+      console.log(1)
+      const {emp_name, emp_hours, emp_startday, shift_id} = req.body;
+      const query = 'INSERT INTO employee (emp_name, emp_hours, emp_startday, shift_id) VALUES ($1, $2, $3, $4)';
+      const values = [emp_name, emp_hours, emp_startday, shift_id];
+      pool.query(query, values);
+    
+  } catch (err) {
+      console.error(err);
+      res.status(500).send('Internal server error');
+  }
+});
+
+
 app.post("/oauth", async (req, res) => {
     const {emailText, passwordText} = req.body
     await pool.query('SELECT * FROM oauth WHERE oauth_email = $1 AND oauth_pass = $2', [emailText, passwordText], 
@@ -145,5 +160,16 @@ app.get("/inventory", async (req, res) => { //Loading in the inventory, in the m
     console.error("ERROR GETTING ITEMS");
   }
 });
+
+app.get("/employees", async (req, res) => { //Loading in the employee, in the manager side
+  res.set('Access-Control-Allow-Origin', '*');
+  try {
+    const allItems = await pool.query("SELECT * FROM employee;")
+    res.json(allItems.rows);
+  } catch (err) {
+    console.error("ERROR GETTING EMPLOYEES");
+  }
+});
+
 
 
