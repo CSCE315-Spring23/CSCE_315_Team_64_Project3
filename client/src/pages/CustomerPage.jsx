@@ -249,4 +249,4 @@ function CustomerPage() {
   )
 }
 
-export default CustomerPagec
+export default CustomerPage

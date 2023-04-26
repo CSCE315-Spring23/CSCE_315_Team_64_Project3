@@ -7,17 +7,17 @@ export default class AddEmployee extends Component{
     constructor() {
         super();
         this.state = {
-            products: []
+            employees: []
         }
         this.fetchEmployees()
     }
 
     fetchEmployees = async() => {
         try {
-          const response = await fetch("http://localhost:8000/inventory")
+          const response = await fetch("http://localhost:8000/employees")
           const jsonData = await response.json()
           this.setState({
-            products: jsonData
+            employees: jsonData
           });
         } catch (err) {
           console.log(err.message)
@@ -29,7 +29,7 @@ export default class AddEmployee extends Component{
         event.preventDefault();
         //console.log(formData.current)
         const newProduct = {
-            product_name: this.formData.current.product_name.value,
+            emp_name: this.formData.current.product_name.value,
             price: this.formData.current.price.value,
             age: this.formData.current.age.value,
             qty: Number(this.formData.current.qty.value)
