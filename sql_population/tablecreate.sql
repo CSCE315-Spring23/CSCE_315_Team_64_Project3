@@ -69,5 +69,17 @@ CREATE TABLE oauth (
     oauth_view text
 );
 
+-- x report table
+CREATE TABLE xrep (
+    xrep_id int PRIMARY KEY,
+    xrep_items text,
+    xrep_price float
+);
 
+-- z report table
+CREATE TABLE zrep (
+    zrep_id int PRIMARY KEY,
+    zrep_items text,
+    zrep_price float
+);
 

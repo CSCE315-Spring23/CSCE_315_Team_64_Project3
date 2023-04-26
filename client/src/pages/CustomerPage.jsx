@@ -15,28 +15,6 @@ function CustomerPage() {
   const [cart, setCart] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
   const [productType, setProductType] = useState('Be Well');
-  const [weather, setWeather] = useState('');
-  const [currTemp, setCurrTemp] = useState(0);
-  const [highTemp, setHighTemp] = useState(0);
-  const [lowTemp, setLowTemp] = useState(0);
-  const [humidity, setHumidity] = useState(0);
-
-  {/* Call weather API once upon mounting */}
-  useEffect(() => {
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', 'http://api.openweathermap.org/data/2.5/weather?lat=30.628&lon=-96.334&units=imperial&appid=703f1d8f031ba9041b4de2e90e795853')
-    xhr.send();
-    xhr.onload = () => {
-      {/* Set data from API call locally */}
-      const data = JSON.parse(xhr.response);
-      setWeather(JSON.parse(JSON.stringify(data['weather'][0]))['description']);
-      setCurrTemp(JSON.parse(JSON.stringify(data['main']))['temp']);
-      setHighTemp(JSON.parse(JSON.stringify(data['main']))['temp_max']);
-      setLowTemp(JSON.parse(JSON.stringify(data['main']))['temp_min']);
-      setHumidity(JSON.parse(JSON.stringify(data['main']))['humidity']);
-      console.log(data)
-    };
-  }, []);
 
   const toastOptions = {
     autoClose: 400,
@@ -103,7 +81,7 @@ function CustomerPage() {
 
   {/* Remove smoothie from the cart */}
   const removeProduct = async(product) => {
-    const newCart =cart.filter(cartItem => cartItem.id !== product.id);
+    const newCart = cart.filter(cartItem => cartItem.id !== product.id);
     setCart(newCart);
   }
 
@@ -162,14 +140,6 @@ function CustomerPage() {
       <h1>Self-Order</h1>
       <div className='row'>
         <div className='col-lg-8'>
-        <div className='row'>
-            <h2>Today's Weather</h2>
-            <h3>{'Temperature Now: ' + currTemp + ' degrees Fahrenheit'}</h3>
-            <h3>{'Weather: ' + weather}</h3>
-            <h3>{'Humidity: ' + humidity}</h3>
-            <h3>{'High Temperature: ' + highTemp + ' degrees Fahrenheit'}</h3>
-            <h3>{'Low Temperature: ' + lowTemp + ' degrees Fahrenheit'}</h3>
-          </div>
           <div className='row'>
             <h2>Smoothie Types</h2>
           </div>
