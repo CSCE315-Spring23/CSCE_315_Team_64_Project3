@@ -145,22 +145,22 @@ function CustomerPage() {
           </div>
           <div className='row'>
             {isLoading ? 'Loading' : <div className='row'>
-              <div className='pos-item px-3 text-center border' onClick={() => setProductType('coffee')}>
+              <div className='pos-item px-3 text-center border' onClick={() => setProductType('Coffee')}>
                 <p>Coffee</p>
               </div>
-              <div className='pos-item px-3 text-center border' onClick={() => setProductType('strawberry')}>
+              <div className='pos-item px-3 text-center border' onClick={() => setProductType('Strawberry')}>
                 <p>Strawberry</p>
               </div>
-              <div className='pos-item px-3 text-center border' onClick={() => setProductType('blueberry')}>
+              <div className='pos-item px-3 text-center border' onClick={() => setProductType('Blueberry')}>
                 <p>Blueberry</p>
               </div>
-              <div className='pos-item px-3 text-center border' onClick={() => setProductType('greens')}>
+              <div className='pos-item px-3 text-center border' onClick={() => setProductType('Greens')}>
                 <p>Greens</p>
               </div>
-              <div className='pos-item px-3 text-center border' onClick={() => setProductType('mango')}>
+              <div className='pos-item px-3 text-center border' onClick={() => setProductType('Mango')}>
                 <p>Mango</p>
               </div>
-              <div className='pos-item px-3 text-center border' onClick={() => setProductType('raspberry')}>
+              <div className='pos-item px-3 text-center border' onClick={() => setProductType('Raspberry')}>
                 <p>Raspberry</p>
               </div>
             </div>}
