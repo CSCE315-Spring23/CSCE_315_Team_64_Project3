@@ -2,13 +2,45 @@ import React, { useState } from "react"
 import { GoogleLogin } from '@react-oauth/google';
 import {Link} from 'react-router-dom'
 import MainLayout from '../layouts/MainLayout'
+import { useNavigate } from "react-router-dom";
 
 function HomePage() {
   let [authMode, setAuthMode] = useState("signin")
-
+  const navigate = useNavigate();
   const changeAuthMode = () => {
     setAuthMode(authMode === "signin" ? "signup" : "signin")
   }
+
+  const [emailText, setemailText] = useState("");
+  const [passwordText, setpasswordText] = useState("");
+
+  async function checkLogin() {
+    try {
+      const response = await fetch("http://localhost:8000/oauth", {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({emailText, passwordText}),
+      })
+      console.log("DONE")
+      console.log(response)
+      console.log(response.statusText)
+      if (response.statusText == 'OK') {
+        navigate('/pos')
+      } else {
+        console.log("DONE")
+      }
+    } catch (err) {
+      console.log(err.message)
+    }
+  }
+
+  const handleEmailChange = (event) => {
+    setemailText(event.target.value); // Update state with the input value
+  };
+
+  const handlePasswordChange = (event) => {
+    setpasswordText(event.target.value); // Update state with the input value
+  };
   
   return (
     <MainLayout>
@@ -30,6 +62,8 @@ function HomePage() {
                   type="email"
                   className="form-control mt-1"
                   placeholder="Enter email"
+                  value={emailText}
+                  onChange={handleEmailChange}
                 />
               </div>
               <div className="form-group mt-3">
@@ -38,10 +72,12 @@ function HomePage() {
                   type="password"
                   className="form-control mt-1"
                   placeholder="Enter password"
+                  value={passwordText}
+                  onChange={handlePasswordChange}
                 />
               </div>
               <div className="d-grid gap-2 mt-3">
-                  <Link to='/pos' className='btn btn-primary'>Login</Link>
+                  <Link to='' onClick = {checkLogin} className='btn btn-primary'>Login</Link>
               </div>
               <p className="text-center mt-2">
                 Forgot <a href="#">password?</a>
@@ -51,6 +87,7 @@ function HomePage() {
               <GoogleLogin className = 'form-control mt-1'
                 onSuccess={credentialResponse => {
                   console.log(credentialResponse);
+                  navigate('/pos')
                 }}
                 onError={() => {
                   console.log('Login Failed');

@@ -15,10 +15,6 @@ app.use(
 
 app.use(express.json()); //req.body
 
-//ROUTES//
-
-//create an order
-
 app.listen(8000, () => {
     console.log("server has started on port 8000");
 });
@@ -72,7 +68,27 @@ app.post("/inventory", async (req, res) => { //Listening for added inventory ite
   }
 });
 
-app.post("/inventory/:item_id", async (req, res) => { //Listening for added inventory items
+app.post("/oauth", async (req, res) => {
+    const {emailText, passwordText} = req.body
+    await pool.query('SELECT * FROM oauth WHERE oauth_email = $1 AND oauth_pass = $2', [emailText, passwordText], 
+      (err, res1) => {
+        if (err) {
+          console.error(err);
+        } else {
+          console.log("Authentication occurred")
+          if (res1.rows.length > 0) {
+            res.status(200).json({ message: 'Authentication successful' });
+          } else {
+            res.status(401).json({ message: 'Invalid credentials' });
+          }
+          console.log(res1.rows.length)
+        }
+      }
+    );
+
+});
+
+app.post("/inventory/:item_id", async (req, res) => { //Listening to increment inventory items
   try {
       const {item_id, val} = req.body
       await pool.query(
@@ -110,7 +126,7 @@ app.delete("/inventory", async (req, res) => { //Listening for deleted inventory
   }
 });
 
-app.get("/smoothies", async (req, res) => {
+app.get("/smoothies", async (req, res) => { //retrieving the smoothies in the database. Called when the customer and server pages are loaded. 
   res.set('Access-Control-Allow-Origin', '*');
   try {
     const allSmoothies = await pool.query("SELECT * FROM smoothies;");
@@ -120,7 +136,7 @@ app.get("/smoothies", async (req, res) => {
   }
 });
 
-app.get("/inventory", async (req, res) => {
+app.get("/inventory", async (req, res) => { //Loading in the inventory, in the manager side
   res.set('Access-Control-Allow-Origin', '*');
   try {
     const allItems = await pool.query("SELECT * FROM items;")
