@@ -9,10 +9,10 @@ export default class AddEmployee extends Component{
         this.state = {
             products: []
         }
-        this.fetchProducts()
+        this.fetchEmployees()
     }
 
-    fetchProducts = async() => {
+    fetchEmployees = async() => {
         try {
           const response = await fetch("http://localhost:8000/inventory")
           const jsonData = await response.json()
