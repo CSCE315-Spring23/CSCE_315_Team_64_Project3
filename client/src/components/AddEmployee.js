@@ -10,6 +10,7 @@ export default class AddEmployee extends Component{
             employees: []
         }
         this.fetchEmployees()
+        this.formData = createRef()
     }
 
     fetchEmployees = async() => {
@@ -23,50 +24,38 @@ export default class AddEmployee extends Component{
           console.log(err.message)
         }
     }
+
+    AddEmployee(emp_name, emp_hours, emp_startday, shift_id) { // Adding a new item to the database
+        return fetch('http://localhost:8000/employees', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ emp_name, emp_hours, emp_startday, shift_id }),
+        }).then((response) => response.json());
+    } 
     
     // addproduct handler method
     add = (event) => {
         event.preventDefault();
         //console.log(formData.current)
-        const newProduct = {
+        const newEmployee = {
             emp_name: this.formData.current.product_name.value,
-            price: this.formData.current.price.value,
-            age: this.formData.current.age.value,
-            qty: Number(this.formData.current.qty.value)
+            emp_hours: this.formData.current.price.value,
+            emp_startday: this.formData.current.start_date.value,
+            shift_id: Number(this.formData.current.qty.value)
         }
-        // add a new product inside products array
-        this.state.products.push(newProduct);
+        this.AddEmployee(newEmployee.emp_name, newEmployee.emp_hours, newEmployee.emp_startday, newEmployee.shift_id)
+
+        this.state.employees.push(newEmployee);
         this.setState({
-            products: this.state.products
-        });
-        //console.log(products);
-    }
-    // increment qty value by 1
-    increQty = (event) => {
-        //console.log(event.target.value)
-        const indexOfArray = event.target.value;
-        this.state.products[indexOfArray].qty = this.state.products[indexOfArray].qty + 1;
-        this.setState({
-            products: this.state.products
-        });
-    }
-    // decrement qty value by 1
-    decreQty = (event) => {
-        const indexOfArray = event.target.value;
-        if (this.state.products[indexOfArray].qty == 0) {
-            return;
-        }
-        this.state.products[indexOfArray].qty = this.state.products[indexOfArray].qty - 1;
-        this.setState({
-            products: this.state.products
+            employees: this.state.employees
         });
     }
     delVal = (event) => {
         const indexOfArray = event.target.value;
-        delete this.state.products[indexOfArray];
+        delete this.state.employees[indexOfArray];
         
         this.setState({
-            products: this.state.products
+            employees: this.state.employees
         });
     }
 
@@ -96,8 +85,8 @@ export default class AddEmployee extends Component{
                     </Form.Group>
 
                     <Form.Group controlId="formBasicQty">
-                        <Form.Label class="product">Age:</Form.Label>
-                        <Form.Control type="decimal" placeholder="Employee Age" name="age" />
+                        <Form.Label class="product">Start Date:</Form.Label>
+                        <Form.Control type="text" placeholder="Employee Start Date" name="start_date" />
                     </Form.Group>
                     <Form.Group controlId="formBasicQty">
                         <Form.Label class="product">Shift:</Form.Label>
@@ -118,21 +107,21 @@ export default class AddEmployee extends Component{
                             {/* <th>Index</th> */}
                             <th class="product2">Name:</th>
                             <th class="product2">Hours</th>
-                            <th class="product2">Age</th>
+                            <th class="product2">Start Date:</th>
                             <th class="product2">Shift</th>
                             <th class="product2">View</th>
                         </tr>
                     </thead>
                     <tbody>
                         {
-                            this.state.products.map((item, index) => {
+                            this.state.employees.map((item, index) => {
                                 return (
                                     <tr key={index}>
                                         {/* <td>{index}</td> */}
-                                        <td>{item.product_name}</td>
-                                        <td>{item.price}</td>
-                                        <td>{item.age}</td>
-                                        <td>{item.qty}</td>
+                                        <td>{item.emp_name}</td>
+                                        <td>{item.emp_hours}</td>
+                                        <td>{item.emp_startday}</td>
+                                        <td>{item.shift_id}</td>
                                         <td class="spacer">
                                             <Button onMouseEnter={(this.changeBackground)} onMouseLeave={(this.changeSubBack)} variant="danger" onClick={event => this.delVal(event)} value={index}>Delete</Button>
 
