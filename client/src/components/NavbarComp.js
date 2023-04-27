@@ -7,8 +7,8 @@ export default function Navbar() {
     <Link to='/man' class="btn btn-outline-success me-2" type="button">Inventory</Link>
     <Link to='/emp' class="btn btn-outline-success me-2" type="button">Employees</Link>
     <Link to='/srep' class="btn btn-outline-success me-2" type="button">Sales Report</Link>
-    <button class="btn btn-outline-success me-2" type="button">Restock Items</button>
-    <button class="btn btn-outline-success me-2" type="button">Excess Items</button>
+    <Link to='/rrep' class="btn btn-outline-success me-2" type="button">Restock Report</Link>
+    <Link to='/erep' class="btn btn-outline-success me-2" type="button">Excess Report</Link>
     <Link to='/xrep' class="btn btn-outline-success me-2" type="button">X Report</Link>
     <button class="btn btn-outline-success me-2" type="button">Z Report</button>
     <Link to='/' class="btn btn-outline-success me-2" type="button">Log Out</Link>
