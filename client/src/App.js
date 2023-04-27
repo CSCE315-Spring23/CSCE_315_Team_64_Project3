@@ -8,6 +8,7 @@ import POSPage from './pages/POSPage';
 import CustomerPage from './pages/CustomerPage';
 import Inventory from './pages/Inventory';
 import Employee from './pages/Employee';
+import SalesReport from './pages/SalesReport';
 import XReport from './pages/XReport';
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Route path="/customer" element={<CustomerPage/>} />
         <Route path="/man" element={<Inventory/>} />
         <Route path="/emp" element={<Employee/>} />
+        <Route path="/srep" element={<SalesReport/>} />
         <Route path="/xrep" element={<XReport/>} />
       </Routes>
     </Router>

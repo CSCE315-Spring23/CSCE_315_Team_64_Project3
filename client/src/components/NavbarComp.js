@@ -6,7 +6,7 @@ export default function Navbar() {
   <form class="container-fluid justify-content-start">
     <Link to='/man' class="btn btn-outline-success me-2" type="button">Inventory</Link>
     <Link to='/emp' class="btn btn-outline-success me-2" type="button">Employees</Link>
-    <button class="btn btn-outline-success me-2" type="button">Sales Report</button>
+    <Link to='/srep' class="btn btn-outline-success me-2" type="button">Sales Report</Link>
     <button class="btn btn-outline-success me-2" type="button">Restock Items</button>
     <button class="btn btn-outline-success me-2" type="button">Excess Items</button>
     <Link to='/xrep' class="btn btn-outline-success me-2" type="button">X Report</Link>
