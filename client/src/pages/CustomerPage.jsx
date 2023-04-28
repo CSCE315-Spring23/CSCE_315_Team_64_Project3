@@ -81,7 +81,7 @@ function CustomerPage() {
 
   {/* Remove smoothie from the cart */}
   const removeProduct = async(product) => {
-    const newCart = cart.filter(cartItem => cartItem.id !== product.id);
+    const newCart = cart.filter(cartItem => cartItem.sm_id !== product.sm_id);
     setCart(newCart);
   }
 
