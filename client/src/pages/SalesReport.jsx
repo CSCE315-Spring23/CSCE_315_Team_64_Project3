@@ -12,7 +12,6 @@ function SalesReport() {
   const [startDate, setStartDate] = useState("1/1/2020")
   const [endDate, setEndDate] = useState("4/1/2023")
 
-
   {/* Add the google translate element to the document */}
   function addTranslateScript() {
     var addScript = document.createElement("script");

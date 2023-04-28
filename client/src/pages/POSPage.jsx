@@ -1,7 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react'
 import MainLayout from '../layouts/MainLayout'
 import axios from "axios"
-import { toast } from 'react-toastify';
 import { ComponentToPrint } from '../components/ComponentToPrint';
 import { useReactToPrint } from 'react-to-print';
 
@@ -12,18 +11,13 @@ function updateTransaction(trans_date, trans_dayofweek, trans_price, sm_name) {
     body: JSON.stringify({ trans_date, trans_dayofweek, sm_name, trans_price }),
   }).then((response) => response.json());
 } 
-
+ 
 function POSPage() {
 
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [cart, setCart] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
-
-  const toastOptions = {
-    autoClose: 400,
-    pauseOnHover: true,
-  }
 
   const fetchProducts = async() => {
     try {
@@ -41,15 +35,6 @@ function POSPage() {
   useEffect(() => {
     fetchProducts();
   }, [])
-
-
-  /*const fetchProducts = async() => {
-    setIsLoading(true);
-    const result = await axios.get('products');
-    console.log(result)
-    setProducts(await result.data);
-    setIsLoading(false);
-  }*/
 
   const addProductToCart = async(product) => {
     // check if the adding product exist
@@ -75,7 +60,6 @@ function POSPage() {
       });
 
       setCart(newCart);
-      toast(`Added ${newItem.sm_name} to cart`,toastOptions)
 
     }else{
       let addingProduct = {
@@ -84,7 +68,6 @@ function POSPage() {
         'totalAmount': product.sm_price,
       }
       setCart([...cart, addingProduct]);
-      toast(`Added ${product.sm_name} to cart`, toastOptions)
     }
 
   }
@@ -114,7 +97,7 @@ function POSPage() {
   useEffect(() => {
     let newTotalAmount = 0;
     cart.forEach(icart => {
-      newTotalAmount = newTotalAmount + parseInt(icart.totalAmount);
+      newTotalAmount = newTotalAmount + parseFloat(icart.totalAmount);
     })
     setTotalAmount(newTotalAmount);
   },[cart])
@@ -169,7 +152,7 @@ function POSPage() {
                     : 'No Item in Cart'}
                   </tbody>
                 </table>
-                <h2 className='px-2 text-white'>Total Cost: ${totalAmount}</h2>
+                <h2 className='px-2 text-white'>Total Cost: ${totalAmount.toFixed(2)}</h2>
               </div>
 
               <div className='mt-3'>

@@ -75,9 +75,6 @@ function HomePage() {
               <div className="d-grid gap-2 mt-3">
                   <Link to='' onClick = {checkLogin} className='btn btn-primary'>Login</Link>
               </div>
-              <p className="text-center mt-2">
-                Forgot <a href="#">password?</a>
-              </p>
             </div>
             <div className="d-grid gap-2 mt-3">
               <GoogleLogin className = 'form-control mt-1'

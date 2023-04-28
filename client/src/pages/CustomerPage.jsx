@@ -1,7 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react'
 import MainLayout from '../layouts/MainLayout'
 import axios from "axios"
-import { toast } from 'react-toastify';
 import { ComponentToPrint } from '../components/ComponentToPrint';
 import { useReactToPrint } from 'react-to-print';
 
@@ -15,11 +14,6 @@ function CustomerPage() {
   const [cart, setCart] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
   const [productType, setProductType] = useState('Be Well');
-
-  const toastOptions = {
-    autoClose: 400,
-    pauseOnHover: true,
-  }
 
   {/* Get Smoothies from Backend */}
   const fetchProducts = async() => {
@@ -64,7 +58,6 @@ function CustomerPage() {
 
       {/* Set the cart and display the update */}
       setCart(newCart);
-      toast(`Added ${newItem.sm_name} to cart`,toastOptions)
 
     {/* Copy over items into a new cart array */}
     }else{
@@ -74,7 +67,6 @@ function CustomerPage() {
         'totalAmount': product.sm_price,
       }
       setCart([...cart, addingProduct]);
-      toast(`Added ${product.sm_name} to cart`, toastOptions)
     }
 
   }
@@ -100,7 +92,7 @@ function CustomerPage() {
   useEffect(() => {
     let newTotalAmount = 0;
     cart.forEach(icart => {
-      newTotalAmount = newTotalAmount + parseInt(icart.totalAmount);
+      newTotalAmount = newTotalAmount + parseFloat(icart.totalAmount);
     })
     setTotalAmount(newTotalAmount);
   },[cart])
@@ -230,7 +222,7 @@ function CustomerPage() {
                     : 'No Item in Cart'}
                   </tbody>
                 </table>
-                <h2 className='px-2 text-white'>Total Amount: ${totalAmount}</h2>
+                <h2 className='px-2 text-white'>Total Amount: ${totalAmount.toFixed(2)}</h2>
               </div>
 
               <div className='mt-3'>

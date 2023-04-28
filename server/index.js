@@ -183,8 +183,7 @@ app.post("/salesreport", async (req, res) => { //Loading in the employee, in the
     allItems = await pool.query("SELECT sm_name, COUNT(*) as count FROM transactions WHERE trans_date BETWEEN $1 AND $2 GROUP BY sm_name ORDER BY count ASC;", 
     [startDate, endDate]);
   }
-  res.json(allItems.rows);
-
+  res.json(allItems.rows); 
 });
 
 
