@@ -38,6 +38,19 @@ app.post("/orders", async (req, res) => { //Listening for new orders to be place
               }
             }
         );
+        await pool.query(
+          'SELECT COUNT(*) FROM xrep;',
+          (err, res) => {
+            if (err) {
+              console.error(err);
+            } else {
+              xrep_id = res.rows[0].count + 1;
+              const query = 'INSERT INTO xrep (xrep_id, xrep_items, xrep_price) VALUES ($1, $2, $3)';
+              const values = [xrep_id, sm_name, trans_price];
+              pool.query(query, values);
+            }
+          }
+      );
     } catch (err) {
         console.error(err);
         res.status(500).send('Internal server error');

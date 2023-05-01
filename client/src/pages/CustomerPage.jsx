@@ -4,6 +4,14 @@ import axios from "axios"
 import { ComponentToPrint } from '../components/ComponentToPrint';
 import { useReactToPrint } from 'react-to-print';
 
+function updateTransaction(trans_date, trans_dayofweek, trans_price, sm_name) {
+  return fetch('http://localhost:8000/orders', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ trans_date, trans_dayofweek, sm_name, trans_price }),
+  }).then((response) => response.json());
+} 
+
 function CustomerPage() {
 
   {/* Define variables */}
@@ -14,6 +22,7 @@ function CustomerPage() {
   const [cart, setCart] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
   const [productType, setProductType] = useState('Be Well');
+
 
   {/* Get Smoothies from Backend */}
   const fetchProducts = async() => {
@@ -85,6 +94,9 @@ function CustomerPage() {
 
   const handlePrint = () => {
     handleReactToPrint();
+    cart.forEach(cartItem => {
+      updateTransaction("4/17/2023", "Sunday", cartItem.totalAmount, cartItem.sm_name)
+    });
   }
 
 
