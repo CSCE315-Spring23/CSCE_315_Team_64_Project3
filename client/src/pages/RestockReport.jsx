@@ -8,6 +8,19 @@ import { Form, Button, Table } from "react-bootstrap";
 
 function RestockItems() {
   const [needsRestock, setNeedsRestock] = useState([{ Item: "Item", Quantity: "0" }, { Item: "Item", Quantity: "0" }]);
+  const [startDate, setStartDate] = useState("1/1/2020")
+  const [endDate, setEndDate] = useState("4/1/2023")
+
+  const changeStartDate = (event) => {
+    setStartDate(event.target.value);
+    console.log(startDate)
+  }
+
+  const changeEndDate = (event) => {
+    setEndDate(event.target.value);
+  }
+  function handleItems() {
+  }
 
   return (
     <MainLayout>
@@ -16,6 +29,25 @@ function RestockItems() {
         <header className="App-header" style={{color: "black"}}>
           
           <h1 class="inv">Restock Report</h1>
+          <Form>
+            <Form.Group controlId="formStartDate">
+                <Form.Label class="product">Start Date:</Form.Label>
+                <Form.Control onChange = {changeStartDate} type="text" placeholder="mm/dd/yy" name="startDate" />
+            </Form.Group>
+
+            <Form.Group controlId="formEndDate">
+                <Form.Label class="product">End Date:</Form.Label>
+                <Form.Control onChange = {changeEndDate} type="text" placeholder="mm/dd/yy" name="endDate" />
+            </Form.Group>
+            <Form.Group>
+                <span></span>
+            </Form.Group>
+            <div class="addButton"></div>
+            <Button  onClick = {handleItems} class="btn btn-primary btn-lg btn-block" >
+                Query Items to Restock
+            </Button>
+            <div class="addButton"></div>
+          </Form>
           <table>
             <tr>
               <th>Item</th>
