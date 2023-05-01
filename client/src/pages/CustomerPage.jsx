@@ -134,7 +134,7 @@ function CustomerPage() {
         <h5>Smoothie Types</h5>
       </div>
       <div className="row">
-        <div className="col-lg-9">
+        <div className="col-lg-10">
             
           <div className="row mb-3">
             <div className="col-lg-2 btn btn-rounded" onClick={() => setProductType('Coffee')}>
@@ -160,11 +160,11 @@ function CustomerPage() {
           {isLoading ? (
             'Loading'
           ) : (
-            <div className='row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 g-0 gy-0 my-0' style={{ marginBottom: '0' }}>
+            <div className='row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 g-0 gy-0 my-0 smoothiegrid' style={{ marginBottom: '0'}}>
               {products.map((product, key) => {
                 if (product.sm_type == productType) {
                   return (
-                    <div key={key} className='col-lg-4 mb-2 smoothie-item'>
+                    <div key={key} className='col-lg-3 mb-2 smoothie-item'>
                         <div className='pos-item px-0 text-center border' style={{fontSize: '9px', height: 'auto'}} onClick={() => addProductToCart(product)}>
                             <p>{product.sm_name}</p>
                             <img src={product.sm_img} className="img-fluid" style={{width: '60%'}} alt={product.sm_name} />
