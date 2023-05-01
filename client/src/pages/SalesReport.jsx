@@ -12,34 +12,6 @@ function SalesReport() {
   const [startDate, setStartDate] = useState("1/1/2020")
   const [endDate, setEndDate] = useState("4/1/2023")
 
-  {/* Add the google translate element to the document */}
-  function addTranslateScript() {
-    var addScript = document.createElement("script");
-      addScript.setAttribute(
-        "src",
-        "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
-      );
-      document.body.appendChild(addScript);
-      window.googleTranslateElementInit = googleTranslateElementInit;
-  };
-
-  {/* Create google translate element and initialize it to english */}
-  const googleTranslateElementInit = () => {
-    new window.google.translate.TranslateElement(
-      {
-        pageLanguage: "en",
-        autoDisplay: false
-      },
-      "google_translate_element"
-    );
-  };
-
-  {/* Add google translate script upon mounting */}
-  const useMountEffect = (fun) => useEffect(fun, [])
-  {
-    useMountEffect(addTranslateScript);
-  }
-
   const changeStartDate = (event) => {
     setStartDate(event.target.value);
     console.log(startDate)
@@ -89,7 +61,6 @@ function SalesReport() {
 
   return (
     <MainLayout>
-      <div id="google_translate_element"></div>
       <div className="App">
         <NavbarComp/>
         <header className="App-header" style={{color: "black"}}>
