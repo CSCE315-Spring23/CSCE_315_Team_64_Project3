@@ -10,6 +10,8 @@ import Inventory from './pages/Inventory';
 import Employee from './pages/Employee';
 import SalesReport from './pages/SalesReport';
 import XReport from './pages/XReport';
+import ZReport from './pages/ZReport';
+
 import Menu from './pages/Menu'
 
 function App() {
@@ -23,6 +25,7 @@ function App() {
         <Route path="/emp" element={<Employee/>} />
         <Route path="/srep" element={<SalesReport/>} />
         <Route path="/xrep" element={<XReport/>} />
+        <Route path="/zrep" element={<ZReport/>} />
         <Route path="/menu" element={<Menu/>} />
       </Routes>
     </Router>
