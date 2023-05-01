@@ -103,12 +103,12 @@ function Menu() {
           {isLoading ? (
             'Loading'
           ) : (
-            <div className='row'>
+            <div className='row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-7 g-1'>
               {products.map((product, key) => {
                 if (product.sm_type == productType) {
                   return (
                     <div key={key} className='col-lg-3 mb-5 smoothie-item'>
-                        <div className='pos-item px-3 text-center border'>
+                        <div className='pos-item px-3 text-center border' style={{fontSize: '12px'}}>
                             <p>{product.sm_name}</p>
                             <img src={product.sm_img} className="img-fluid" style={{width: '80%'}} alt={product.sm_name} />
                             <p>${product.sm_price}</p>
