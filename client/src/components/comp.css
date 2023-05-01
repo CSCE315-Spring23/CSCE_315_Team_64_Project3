@@ -74,12 +74,12 @@
   .smoothie-item .pos-item p {
     margin: 0;
 
-    font-size: 0.6rem;
+    /* font-size: 0.6rem;
     max-width: 100%;
     word-wrap: break-word;
     hyphens: auto;
     overflow: hidden;
-    text-overflow: ellipsis;
+    text-overflow: ellipsis; */
     /* white-space: nowrap; */
   }
 
@@ -101,11 +101,15 @@
   .parent-element {
     position: fixed;
     top: 25%;
-    right: 2.5%;
+    right: 1.5%;
   }   
 
   .plsaddmsg {
     transform: translate(20%, -200%);
+  }
+
+  .smoothiegrid {
+    transform: translate(-1%, 0%);
   }
   
   
