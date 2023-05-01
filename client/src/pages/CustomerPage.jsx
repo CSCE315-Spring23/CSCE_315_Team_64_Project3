@@ -143,70 +143,57 @@ function CustomerPage() {
     <div id="google_translate_element"></div>
       <h1>Self-Order</h1>
       <div className='row'>
-        <div className='col-lg-8'>
-          <div className='row'>
-            <h2>Smoothie Types</h2>
+        <h5>Smoothie Types</h5>
+      </div>
+      <div className="row">
+        <div className="col-lg-9">
+            
+          <div className="row mb-3">
+            <div className="col-lg-2 btn btn-rounded" onClick={() => setProductType('Coffee')}>
+                Coffee
+            </div>
+            <div className="col-lg-2 btn btn-rounded" onClick={() => setProductType('Strawberry')}>
+                Strawberry
+            </div>
+            <div className="col-lg-2 btn btn-rounded" onClick={() => setProductType('Blueberry')}>
+                Blueberry
+            </div>
+            <div className="col-lg-2 btn btn-rounded" onClick={() => setProductType('Greens')}>
+                Greens
+            </div>
+            <div className="col-lg-2 btn btn-rounded" onClick={() => setProductType('Mango')}>
+                Mango
+            </div>
+            <div className="col-lg-2 btn btn-rounded" onClick={() => setProductType('Raspberry')}>
+                Raspberry
+            </div>
           </div>
-          <div className='row'>
-            {isLoading ? 'Loading' : <div className='row'>
-              <div className='pos-item px-3 text-center border' onClick={() => setProductType('Coffee')}>
-                <p>Coffee</p>
-              </div>
-              <div className='pos-item px-3 text-center border' onClick={() => setProductType('Strawberry')}>
-                <p>Strawberry</p>
-              </div>
-              <div className='pos-item px-3 text-center border' onClick={() => setProductType('Blueberry')}>
-                <p>Blueberry</p>
-              </div>
-              <div className='pos-item px-3 text-center border' onClick={() => setProductType('Greens')}>
-                <p>Greens</p>
-              </div>
-              <div className='pos-item px-3 text-center border' onClick={() => setProductType('Mango')}>
-                <p>Mango</p>
-              </div>
-              <div className='pos-item px-3 text-center border' onClick={() => setProductType('Raspberry')}>
-                <p>Raspberry</p>
-              </div>
-            </div>}
-          </div>
-          <div className='row'>
-            <h2>{productType} Smoothies</h2>
-          </div>
-          <div className='row'>
-            {isLoading ? 'Loading' : <div className='row'>
+  
+          {isLoading ? (
+            'Loading'
+          ) : (
+            <div className='row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 g-0 gy-0 my-0' style={{ marginBottom: '0' }}>
               {products.map((product, key) => {
                 if (product.sm_type == productType) {
-                  return <div key={key} className='col-lg-3 mb-5'>
-                    <div className='pos-item px-3 text-center border' onClick={() => addProductToCart(product)}>
-                      <p>{product.sm_name}</p>
-                      <img src={product.sm_img} className="img-fluid" alt={product.sm_name} />
-                      <p>${product.sm_price}</p>
+                  return (
+                    <div key={key} className='col-lg-4 mb-2 smoothie-item'>
+                        <div className='pos-item px-0 text-center border' style={{fontSize: '9px', height: 'auto'}} onClick={() => addProductToCart(product)}>
+                            <p>{product.sm_name}</p>
+                            <img src={product.sm_img} className="img-fluid" style={{width: '60%'}} alt={product.sm_name} />
+                            <p>${product.sm_price}</p>
+                        </div>
                     </div>
-                  </div>
+                  );
                 }
               })}
-            </div>}
-          </div>
-          <div className='row'>
-            <h2>Extras</h2>
-          </div>
-          <div className='row'>
-            <div className='pos-item px-3 text-center border'>
-              <p>Napkins</p>
             </div>
-            <div className='pos-item px-3 text-center border'>
-              <p>Cups</p>
-            </div>
-            <div className='pos-item px-3 text-center border'>
-              <p>Straws</p>
-            </div>
-          </div>
+          )}
         </div>
-        <div className='col-lg-4'>
+        <div className='col-lg-4 parent-element' style={{ transform: 'translateX(50px)' }}>
               <div style={{display: "none"}}>
                 <ComponentToPrint cart={cart} totalAmount={totalAmount} ref={componentRef}/>
               </div>
-              <div className='table-responsive bg-dark'>
+              <div className='table-responsive bg-dark' style={{ transform: 'scale(0.7)' }}>
                 <table className='table table-responsive table-light table-hover'>
                   <thead>
                     <tr>
@@ -237,7 +224,7 @@ function CustomerPage() {
                 <h2 className='px-2 text-white'>Total Amount: ${totalAmount.toFixed(2)}</h2>
               </div>
 
-              <div className='mt-3'>
+              <div className='mt-3 plsaddmsg'>
                 { totalAmount !== 0 ? <div>
                   <button className='btn btn-primary' onClick={handlePrint}>
                     Pay Now

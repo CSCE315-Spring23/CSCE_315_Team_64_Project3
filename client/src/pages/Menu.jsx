@@ -76,6 +76,9 @@ function Menu() {
     <MainLayout>
       <div id="google_translate_element"></div>
       <h1>Menu</h1>
+      <div className='row'>
+        <h5>Smoothie Types</h5>
+      </div>
       <div className="row">
         <div className="col-lg-12">
             
