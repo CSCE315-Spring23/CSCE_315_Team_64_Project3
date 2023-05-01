@@ -76,6 +76,9 @@ function Menu() {
     <MainLayout>
       <div id="google_translate_element"></div>
       <h1>Menu</h1>
+      <div className='row'>
+        <h5>Smoothie Types</h5>
+      </div>
       <div className="row">
         <div className="col-lg-12">
             
@@ -103,14 +106,14 @@ function Menu() {
           {isLoading ? (
             'Loading'
           ) : (
-            <div className='row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-7 g-1'>
+            <div className='row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-7 g-0 gy-0 my-0' style={{ marginBottom: '0' }}>
               {products.map((product, key) => {
                 if (product.sm_type == productType) {
                   return (
-                    <div key={key} className='col-lg-3 mb-5 smoothie-item'>
-                        <div className='pos-item px-3 text-center border' style={{fontSize: '12px'}}>
+                    <div key={key} className='col-lg-3 mb-2 smoothie-item'>
+                        <div className='pos-item px-0 text-center border' style={{fontSize: '9px', height: 'auto'}}>
                             <p>{product.sm_name}</p>
-                            <img src={product.sm_img} className="img-fluid" style={{width: '80%'}} alt={product.sm_name} />
+                            <img src={product.sm_img} className="img-fluid" style={{width: '60%'}} alt={product.sm_name} />
                             <p>${product.sm_price}</p>
                         </div>
                     </div>
