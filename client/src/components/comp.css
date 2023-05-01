@@ -83,6 +83,30 @@
     /* white-space: nowrap; */
   }
 
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+  }
+
+  .col-lg-4 {
+    margin-left: auto;
+  }
+
+  .col-lg-9 {
+    margin-right: auto;
+  }
+
+  .parent-element {
+    position: fixed;
+    top: 25%;
+    right: 2.5%;
+  }   
+
+  .plsaddmsg {
+    transform: translate(20%, -200%);
+  }
   
   
   
