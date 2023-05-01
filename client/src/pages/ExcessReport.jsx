@@ -9,7 +9,6 @@ import { Form, Button, Table } from "react-bootstrap";
 function ExcessReport() {
   const [hasExcess, setHasExcess] = useState([{ Item: "Item", Quantity: "0" }, { Item: "Item", Quantity: "0" }]);
 
-
   return (
     <MainLayout>
       <div className="App">

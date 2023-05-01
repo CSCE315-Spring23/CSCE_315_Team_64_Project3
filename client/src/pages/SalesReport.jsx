@@ -22,7 +22,6 @@ function SalesReport() {
   }
 
   async function updateBest() {
-    console.log("clicked")
     const type=1
     try {
       const response = await fetch("http://localhost:8000/salesreport", {
@@ -39,11 +38,11 @@ function SalesReport() {
   }
 
   async function updateWorst() {
-    console.log("clicked")
     const type=0
     try {
       const response = await fetch("http://localhost:8000/salesreport", {
         method : "POST",
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({startDate, endDate, type}),
       });
       const jsonData = await response.json()

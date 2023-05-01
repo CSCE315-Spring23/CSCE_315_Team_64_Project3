@@ -35,9 +35,7 @@ function POSPage() {
   useEffect(() => {
     fetchProducts();
   }, [])
-
   const addProductToCart = async(product) => {
-    // check if the adding product exist
     let findProductInCart = await cart.find(i=>{
       return i.sm_id === product.sm_id
     });
@@ -54,14 +52,14 @@ function POSPage() {
             totalAmount: cartItem.sm_price * (cartItem.quantity + 1)
           }
           newCart.push(newItem);
-        }else{
+        } else {
           newCart.push(cartItem);
         }
       });
 
       setCart(newCart);
 
-    }else{
+    } else {
       let addingProduct = {
         ...product,
         'quantity': 1,

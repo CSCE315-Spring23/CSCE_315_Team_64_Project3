@@ -236,13 +236,16 @@ app.get("/employees", async (req, res) => { //Loading in the employee, in the ma
 app.post("/salesreport", async (req, res) => { //Loading in the employee, in the manager side
   res.set('Access-Control-Allow-Origin', '*');
   const {startDate, endDate, type} = req.body
+  console.log(startDate)
+
   let allItems = null
   console.log(type)
+
   if (Number(type)==1) {
-    allItems = await pool.query("SELECT sm_name, COUNT(*) as count FROM transactions WHERE trans_date BETWEEN $1 AND $2 GROUP BY sm_name ORDER BY count DESC;", 
+    allItems = await pool.query("SELECT sm_name, COUNT(*) as count FROM transactions WHERE trans_date >= $1 AND trans_date <= $2 GROUP BY sm_name ORDER BY count DESC;", 
     [startDate, endDate]);
   } else {
-    allItems = await pool.query("SELECT sm_name, COUNT(*) as count FROM transactions WHERE trans_date BETWEEN $1 AND $2 GROUP BY sm_name ORDER BY count ASC;", 
+    allItems = await pool.query("SELECT sm_name, COUNT(*) as count FROM transactions WHERE trans_date >= $1 AND trans_date <= $2 GROUP BY sm_name ORDER BY count ASC;", 
     [startDate, endDate]);
   }
   res.json(allItems.rows); 
