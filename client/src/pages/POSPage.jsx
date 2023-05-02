@@ -4,11 +4,11 @@ import axios from "axios"
 import { ComponentToPrint } from '../components/ComponentToPrint';
 import { useReactToPrint } from 'react-to-print';
 
-function updateTransaction(trans_date, trans_dayofweek, trans_price, sm_name) {
+function updateTransaction(trans_date, trans_dayofweek, trans_price, sm_name, offset) {
   return fetch('http://localhost:8000/orders', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ trans_date, trans_dayofweek, sm_name, trans_price }),
+    body: JSON.stringify({ trans_date, trans_dayofweek, sm_name, trans_price, offset}),
   }).then((response) => response.json());
 } 
  
@@ -35,9 +35,7 @@ function POSPage() {
   useEffect(() => {
     fetchProducts();
   }, [])
-
   const addProductToCart = async(product) => {
-    // check if the adding product exist
     let findProductInCart = await cart.find(i=>{
       return i.sm_id === product.sm_id
     });
@@ -54,14 +52,14 @@ function POSPage() {
             totalAmount: cartItem.sm_price * (cartItem.quantity + 1)
           }
           newCart.push(newItem);
-        }else{
+        } else {
           newCart.push(cartItem);
         }
       });
 
       setCart(newCart);
 
-    }else{
+    } else {
       let addingProduct = {
         ...product,
         'quantity': 1,
@@ -85,8 +83,18 @@ function POSPage() {
 
   const handlePrint = () => {
     handleReactToPrint(); 
+    let offset=0
+    const currentDate = new Date();
+    const year = currentDate.getFullYear().toString()
+    const month = ("0" + (currentDate.getMonth() + 1)).slice(-2);
+    const day = ("0" + currentDate.getDate()).slice(-2);
+    const formattedDate = `${year}-${month}-${day}`;
+    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const dayOfWeek = daysOfWeek[currentDate.getDay()];
+    console.log(formattedDate)
     cart.forEach(cartItem => {
-      updateTransaction("4/17/2023", "Sunday", cartItem.totalAmount, cartItem.sm_name)
+      updateTransaction(formattedDate, dayOfWeek, cartItem.totalAmount, cartItem.sm_name, offset)
+      offset+=1
     });
   }
 

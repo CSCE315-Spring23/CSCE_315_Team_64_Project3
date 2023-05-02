@@ -4,6 +4,13 @@ import axios from "axios"
 import { ComponentToPrint } from '../components/ComponentToPrint';
 import { useReactToPrint } from 'react-to-print';
 
+function updateTransaction(trans_date, trans_dayofweek, trans_price, sm_name, offset) {
+  return fetch('http://localhost:8000/orders', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ trans_date, trans_dayofweek, sm_name, trans_price, offset}),
+  }).then((response) => response.json());
+} 
 function CustomerPage() {
 
   {/* Define variables */}
@@ -15,6 +22,7 @@ function CustomerPage() {
   const [totalAmount, setTotalAmount] = useState(0);
   const [productType, setProductType] = useState('Be Well');
   const [isPurchased, setIsPurchased] = useState(false); // for purchased print
+
 
   {/* Get Smoothies from Backend */}
   const fetchProducts = async() => {
@@ -84,14 +92,28 @@ function CustomerPage() {
     content: () => componentRef.current,
   });
 
-  // const handlePrint = () => {
-  //   handleReactToPrint();
-  // }
-  const handlePrint = useReactToPrint({
+  // const handlePrint = useReactToPrint({
+  //   content: () => componentRef.current,
+  //   onAfterPrint: () => setIsPurchased(true)
+  // });
+  const handlePrint = () => ({
     content: () => componentRef.current,
     onAfterPrint: () => setIsPurchased(true)
+    // handleReactToPrint(); 
+    // let offset=0
+    // const currentDate = new Date();
+    // const year = currentDate.getFullYear().toString()
+    // const month = ("0" + (currentDate.getMonth() + 1)).slice(-2);
+    // const day = ("0" + currentDate.getDate()).slice(-2);
+    // const formattedDate = `${year}-${month}-${day}`;
+    // const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    // const dayOfWeek = daysOfWeek[currentDate.getDay()];
+    // console.log(formattedDate)
+    // cart.forEach(cartItem => {
+    //   updateTransaction(formattedDate, dayOfWeek, cartItem.totalAmount, cartItem.sm_name, offset)
+    //   offset+=1
+    // });
   });
-
 
   {/* Update the cart total */}
   useEffect(() => {

@@ -12,34 +12,6 @@ function SalesReport() {
   const [startDate, setStartDate] = useState("1/1/2020")
   const [endDate, setEndDate] = useState("4/1/2023")
 
-  {/* Add the google translate element to the document */}
-  function addTranslateScript() {
-    var addScript = document.createElement("script");
-      addScript.setAttribute(
-        "src",
-        "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
-      );
-      document.body.appendChild(addScript);
-      window.googleTranslateElementInit = googleTranslateElementInit;
-  };
-
-  {/* Create google translate element and initialize it to english */}
-  const googleTranslateElementInit = () => {
-    new window.google.translate.TranslateElement(
-      {
-        pageLanguage: "en",
-        autoDisplay: false
-      },
-      "google_translate_element"
-    );
-  };
-
-  {/* Add google translate script upon mounting */}
-  const useMountEffect = (fun) => useEffect(fun, [])
-  {
-    useMountEffect(addTranslateScript);
-  }
-
   const changeStartDate = (event) => {
     setStartDate(event.target.value);
     console.log(startDate)
@@ -50,7 +22,6 @@ function SalesReport() {
   }
 
   async function updateBest() {
-    console.log("clicked")
     const type=1
     try {
       const response = await fetch("http://localhost:8000/salesreport", {
@@ -67,11 +38,11 @@ function SalesReport() {
   }
 
   async function updateWorst() {
-    console.log("clicked")
     const type=0
     try {
       const response = await fetch("http://localhost:8000/salesreport", {
         method : "POST",
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({startDate, endDate, type}),
       });
       const jsonData = await response.json()
@@ -89,7 +60,6 @@ function SalesReport() {
 
   return (
     <MainLayout>
-      <div id="google_translate_element"></div>
       <div className="App">
         <NavbarComp/>
         <header className="App-header" style={{color: "black"}}>
@@ -97,12 +67,12 @@ function SalesReport() {
           <Form>
             <Form.Group controlId="formStartDate">
                 <Form.Label class="product">Start Date:</Form.Label>
-                <Form.Control onChange = {changeStartDate} type="text" placeholder="mm/dd/yy" name="startDate" />
+                <Form.Control onChange = {changeStartDate} type="text" placeholder="yyyy-mm-dd" name="startDate" />
             </Form.Group>
 
             <Form.Group controlId="formEndDate">
                 <Form.Label class="product">End Date:</Form.Label>
-                <Form.Control onChange = {changeEndDate} type="text" placeholder="mm/dd/yy" name="endDate" />
+                <Form.Control onChange = {changeEndDate} type="text" placeholder="yyyy-mm-dd" name="endDate" />
             </Form.Group>
             <Form.Group>
                 <span></span>
