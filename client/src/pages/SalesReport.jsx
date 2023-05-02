@@ -9,7 +9,7 @@ import { Form, Button, Table } from "react-bootstrap";
 function SalesReport() {
   const [best, setBest] = useState([{ Item: "Item", Sales: "0.0" }, { Item: "Item", Sales: "0.0" }, { Item: "Item", Sales: "0.0" }]);
   const [worst, setWorst] = useState([{ Item: "Item", Sales: "0.0" }, { Item: "Item", Sales: "0.0" }, { Item: "Item", Sales: "0.0" }]);
-  const [startDate, setStartDate] = useState("2020-01-01")
+  const [startDate, setStartDate] = useState("2000-01-01")
   const [endDate, setEndDate] = useState("2023-01-01")
 
   const changeStartDate = (event) => {

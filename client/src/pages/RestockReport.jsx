@@ -9,7 +9,7 @@ import { Form, Button, Table } from "react-bootstrap";
 function RestockItems() {
   const [needsRestock, setNeedsRestock] = useState([{ Item: "Item", Quantity: "0" }, { Item: "Item", Quantity: "0" }]);
 
-  async function handleItems() {
+  const handleItems = async() => {
     try {
       const response = await fetch("http://localhost:8000/restock", {
         method : "GET",
@@ -23,7 +23,7 @@ function RestockItems() {
     }
   }
 
-  useEffect(handleItems, [])
+  useEffect(() => { handleItems() }, [])
 
   return (
     <MainLayout>
