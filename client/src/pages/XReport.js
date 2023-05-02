@@ -6,11 +6,12 @@ import {useEffect, useState} from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react'
 
-function updateZReport(zrep_id, zrep_items, zrep_price) {
+function updateZReport(zrep_id, zrep_items, zrep_price, offset) {
+  console.log("UPDATING")
   return fetch('http://localhost:8000/zrepfill', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ zrep_id, zrep_items, zrep_price }),
+    body: JSON.stringify({ zrep_id, zrep_items, zrep_price, offset }),
   }).then((response) => response.json());
 } 
 function clearXReport() {
@@ -24,8 +25,11 @@ function clearXReport() {
 function XReport() {
   const [data, setXRep] = useState([]);
   const handlePrint = () => {
+    let offset = 0
     data.forEach(dataItem => {
-      updateZReport(dataItem.xrep_id, dataItem.xrep_items, dataItem.xrep_price)
+      console.log(dataItem.xrep_id)
+      updateZReport(dataItem.xrep_id, dataItem.xrep_items, dataItem.xrep_price, offset)
+      offset+=1
     });
     clearXReport();
   }
@@ -45,7 +49,7 @@ function XReport() {
   },[]);
   useEffect(() => {
     handlePrint();
-  })
+  },[data])
   return (
     <div className="XReport">
         <NavbarComp/>

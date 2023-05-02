@@ -21,15 +21,14 @@ app.listen(8000, () => {
 
 app.post("/zrepfill", async (req, res) => { //Listening for new orders to be placed
   try {
-      const { zrep_id, zrep_items, zrep_price} = req.body;
+      const { zrep_id, zrep_items, zrep_price, offset} = req.body;
       const query = 'INSERT INTO zrep (zrep_id, zrep_items, zrep_price) VALUES ($1, $2, $3);';
-              const values = [zrep_id, zrep_items, zrep_price];
-              pool.query(query, values);
-      
+      const values = [zrep_id + offset, zrep_items, zrep_price];
+      pool.query(query, values);
   } catch (err) {
     console.log("there is an error");
-      console.error(err);
-      res.status(500).send('Internal server error');
+    console.error(err);
+    res.status(500).send('Internal server error');
   }
 });
 
@@ -53,7 +52,7 @@ app.post("/orders", async (req, res) => { //Listening for new orders to be place
             }
         );
         await pool.query(
-          'SELECT MAX(xrep_id) FROM xrep;',
+          'SELECT MAX(zrep_id) FROM zrep;',
           (err, res) => {
             if (err) {
               console.error(err);
@@ -206,6 +205,7 @@ app.get("/xrepfull", async (req, res) => { //retrieving the smoothies in the dat
 });
 app.get("/zrepfull", async (req, res) => { //retrieving the smoothies in the database. Called when the customer and server pages are loaded. 
   res.set('Access-Control-Allow-Origin', '*');
+  console.log(1)
   try {
     const allSmoothies = await pool.query("SELECT * FROM zrep;");
     res.json(allSmoothies.rows);

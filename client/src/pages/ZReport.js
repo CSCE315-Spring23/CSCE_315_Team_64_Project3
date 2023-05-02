@@ -23,7 +23,7 @@ function ZReport() {
       const response = await fetch("http://localhost:8000/zrepfull")
       const jsonData = await response.json()
       setZReport(jsonData)
-      
+      console.log(jsonData)
     } catch (err) {
       console.log(err.message)
     }

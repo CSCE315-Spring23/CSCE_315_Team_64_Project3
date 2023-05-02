@@ -27,6 +27,11 @@ function ExcessReport() {
         body: JSON.stringify({startDate, endDate})
       });
       const jsonData = await response.json()
+      jsonData.forEach(item => {
+        console.log(typeof(item.percent))
+        item.percent =  parseFloat(parseFloat(item.percent).toFixed(2));
+      })
+
       setHasExcess(jsonData)
       console.log(jsonData)
     } catch (err) {
@@ -61,14 +66,14 @@ function ExcessReport() {
           </Form>
           <table>
             <tr>
-              <th>Item</th>
-              <th>Quantity</th>
+              <th>Item:</th>
+              <th>Percent Sold:</th>
             </tr>
             {hasExcess.map((val, key) => {
               return (
                 <tr key={key}>
                   <td>{val.sm_name}</td>
-                  <td>{val.percent}</td>
+                  <td>{val.percent + "%"}</td>
                 </tr>
               )
             })}

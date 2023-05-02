@@ -34,8 +34,8 @@ function RestockItems() {
           <h1 class="inv">Restock Report</h1>
           <table>
             <tr>
-              <th>Item</th>
-              <th>Quantity</th>
+              <th>Item:</th>
+              <th>Quantity:</th>
             </tr>
             {needsRestock.map((val, key) => {
               return (
