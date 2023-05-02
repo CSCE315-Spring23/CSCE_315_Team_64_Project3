@@ -88,9 +88,6 @@ function CustomerPage() {
 
   const componentRef = useRef();
 
-  const handleReactToPrint = useReactToPrint({
-    content: () => componentRef.current,
-  });
 
   // const handlePrint = useReactToPrint({
   //   content: () => componentRef.current,
@@ -98,22 +95,30 @@ function CustomerPage() {
   // });
   const handlePrint = () => ({
     content: () => componentRef.current,
-    onAfterPrint: () => setIsPurchased(true)
-    // handleReactToPrint(); 
-    // let offset=0
-    // const currentDate = new Date();
-    // const year = currentDate.getFullYear().toString()
-    // const month = ("0" + (currentDate.getMonth() + 1)).slice(-2);
-    // const day = ("0" + currentDate.getDate()).slice(-2);
-    // const formattedDate = `${year}-${month}-${day}`;
-    // const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    // const dayOfWeek = daysOfWeek[currentDate.getDay()];
-    // console.log(formattedDate)
-    // cart.forEach(cartItem => {
-    //   updateTransaction(formattedDate, dayOfWeek, cartItem.totalAmount, cartItem.sm_name, offset)
-    //   offset+=1
-    // });
+    onAfterPrint: () => setIsPurchased(true),
   });
+
+  const handlePrint1 = () => {
+    let offset=0
+    const currentDate = new Date();
+    const year = currentDate.getFullYear().toString()
+    const month = ("0" + (currentDate.getMonth() + 1)).slice(-2);
+    const day = ("0" + currentDate.getDate()).slice(-2);
+    const formattedDate = `${year}-${month}-${day}`;
+    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const dayOfWeek = daysOfWeek[currentDate.getDay()];
+    console.log(formattedDate)
+    cart.forEach(cartItem => {
+      updateTransaction(formattedDate, dayOfWeek, cartItem.totalAmount, cartItem.sm_name, offset)
+      offset+=1
+    });
+  };
+
+  const handlePrints = () => {
+    handlePrint()
+    handlePrint1()
+  }
+  
 
   {/* Update the cart total */}
   useEffect(() => {
@@ -245,7 +250,7 @@ function CustomerPage() {
 
               <div className='mt-3 plsaddmsg'>
                 { totalAmount !== 0 ? <div>
-                  <button className='btn btn-primary paynowbtn' style={{ width: "110%" }} onClick={handlePrint}>
+                  <button className='btn btn-primary paynowbtn' style={{ width: "110%" }} onClick={handlePrints}>
                     Pay Now
                   </button>
 
@@ -253,8 +258,7 @@ function CustomerPage() {
 
                 }
               </div>
-              {isPurchased && <div className="purchasedbtn" style={{color: 'green'}}>Purchase successful!</div>}
-
+              {isPurchased && <div className="purchasedbtn" style={{color: 'green'}}>Purchase successful!</div>}s
               
         </div>
       </div>

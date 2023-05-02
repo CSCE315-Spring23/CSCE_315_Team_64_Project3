@@ -243,15 +243,18 @@ app.get("/restock", async (req, res) => { //Loading in the employee, in the mana
   }
 });
 
-app.get("/excess", async (req, res) => { //Loading in the employee, in the manager side
+app.post("/excess", async (req, res) => { //Loading in the employee, in the manager side
   res.set('Access-Control-Allow-Origin', '*');
+  const {startDate, endDate} = req.body
   try {
-    const allItems = await pool.query("SELECT * FROM items WHERE item_quantitylbs < $1;", [40])
+    const allItems = await pool.query("SELECT sm_name, COUNT(*) * 100.0 / SUM(COUNT(*)) OVER () AS percent FROM transactions WHERE trans_date >= $1 AND trans_date <= $2 GROUP BY sm_name ORDER BY percent DESC;", [startDate, endDate])
     res.json(allItems.rows);
   } catch (err) {
     console.error("ERROR GETTING RESTOCK");
   }
 });
+
+
 
 app.post("/salesreport", async (req, res) => { //Loading in the employee, in the manager side
   res.set('Access-Control-Allow-Origin', '*');
