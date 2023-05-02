@@ -8,19 +8,22 @@ import { Form, Button, Table } from "react-bootstrap";
 
 function ExcessReport() {
   const [hasExcess, setHasExcess] = useState([{ Item: "Item", Quantity: "0" }, { Item: "Item", Quantity: "0" }]);
-  const [startDate, setStartDate] = useState("1/1/2020")
-  const [endDate, setEndDate] = useState("4/1/2023")
 
-  const changeStartDate = (event) => {
-    setStartDate(event.target.value);
-    console.log(startDate)
+  async function handleItems() {
+    try {
+      const response = await fetch("http://localhost:8000/excess", {
+        method : "GET",
+        headers: { 'Content-Type': 'application/json' },
+      });
+      const jsonData = await response.json()
+      setHasExcess(jsonData)
+      console.log(jsonData)
+    } catch (err) {
+      console.log(err.message)
+    }
   }
 
-  const changeEndDate = (event) => {
-    setEndDate(event.target.value);
-  }
-  function handleItems() {
-  }
+
   return (
     <MainLayout>
       <div className="App">
@@ -28,25 +31,6 @@ function ExcessReport() {
         <header className="App-header" style={{color: "black"}}>
           
           <h1 class="inv">Excess Report</h1>
-          <Form>
-            <Form.Group controlId="formStartDate">
-                <Form.Label class="product">Start Date:</Form.Label>
-                <Form.Control onChange = {changeStartDate} type="text" placeholder="mm/dd/yy" name="startDate" />
-            </Form.Group>
-
-            <Form.Group controlId="formEndDate">
-                <Form.Label class="product">End Date:</Form.Label>
-                <Form.Control onChange = {changeEndDate} type="text" placeholder="mm/dd/yy" name="endDate" />
-            </Form.Group>
-            <Form.Group>
-                <span></span>
-            </Form.Group>
-            <div class="addButton"></div>
-            <Button  onClick = {handleItems} class="btn btn-primary btn-lg btn-block" >
-                Query Excess Items
-            </Button>
-            <div class="addButton"></div>
-          </Form>
           <table>
             <tr>
               <th>Item</th>

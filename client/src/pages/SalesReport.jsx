@@ -67,12 +67,12 @@ function SalesReport() {
           <Form>
             <Form.Group controlId="formStartDate">
                 <Form.Label class="product">Start Date:</Form.Label>
-                <Form.Control onChange = {changeStartDate} type="text" placeholder="yy-mm-dd" name="startDate" />
+                <Form.Control onChange = {changeStartDate} type="text" placeholder="yyyy-mm-dd" name="startDate" />
             </Form.Group>
 
             <Form.Group controlId="formEndDate">
                 <Form.Label class="product">End Date:</Form.Label>
-                <Form.Control onChange = {changeEndDate} type="text" placeholder="yy-mm-dd" name="endDate" />
+                <Form.Control onChange = {changeEndDate} type="text" placeholder="yyyy-mm-dd" name="endDate" />
             </Form.Group>
             <Form.Group>
                 <span></span>

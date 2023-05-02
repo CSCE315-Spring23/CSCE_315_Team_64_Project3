@@ -8,19 +8,22 @@ import { Form, Button, Table } from "react-bootstrap";
 
 function RestockItems() {
   const [needsRestock, setNeedsRestock] = useState([{ Item: "Item", Quantity: "0" }, { Item: "Item", Quantity: "0" }]);
-  const [startDate, setStartDate] = useState("1/1/2020")
-  const [endDate, setEndDate] = useState("4/1/2023")
 
-  const changeStartDate = (event) => {
-    setStartDate(event.target.value);
-    console.log(startDate)
+  async function handleItems() {
+    try {
+      const response = await fetch("http://localhost:8000/restock", {
+        method : "GET",
+        headers: { 'Content-Type': 'application/json' },
+      });
+      const jsonData = await response.json()
+      setNeedsRestock(jsonData)
+      console.log(jsonData)
+    } catch (err) {
+      console.log(err.message)
+    }
   }
 
-  const changeEndDate = (event) => {
-    setEndDate(event.target.value);
-  }
-  function handleItems() {
-  }
+  useEffect(handleItems, [])
 
   return (
     <MainLayout>
@@ -29,25 +32,6 @@ function RestockItems() {
         <header className="App-header" style={{color: "black"}}>
           
           <h1 class="inv">Restock Report</h1>
-          <Form>
-            <Form.Group controlId="formStartDate">
-                <Form.Label class="product">Start Date:</Form.Label>
-                <Form.Control onChange = {changeStartDate} type="text" placeholder="mm/dd/yy" name="startDate" />
-            </Form.Group>
-
-            <Form.Group controlId="formEndDate">
-                <Form.Label class="product">End Date:</Form.Label>
-                <Form.Control onChange = {changeEndDate} type="text" placeholder="mm/dd/yy" name="endDate" />
-            </Form.Group>
-            <Form.Group>
-                <span></span>
-            </Form.Group>
-            <div class="addButton"></div>
-            <Button  onClick = {handleItems} class="btn btn-primary btn-lg btn-block" >
-                Query Items to Restock
-            </Button>
-            <div class="addButton"></div>
-          </Form>
           <table>
             <tr>
               <th>Item</th>
@@ -56,8 +40,8 @@ function RestockItems() {
             {needsRestock.map((val, key) => {
               return (
                 <tr key={key}>
-                  <td>{val.Item}</td>
-                  <td>{val.Quantity}</td>
+                  <td>{val.item_name}</td>
+                  <td>{val.item_quantitylbs}</td>
                 </tr>
               )
             })}

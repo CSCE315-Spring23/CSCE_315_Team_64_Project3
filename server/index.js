@@ -233,6 +233,26 @@ app.get("/employees", async (req, res) => { //Loading in the employee, in the ma
   }
 });
 
+app.get("/restock", async (req, res) => { //Loading in the employee, in the manager side
+  res.set('Access-Control-Allow-Origin', '*');
+  try {
+    const allItems = await pool.query("SELECT * FROM items WHERE item_quantitylbs < $1;", [40])
+    res.json(allItems.rows);
+  } catch (err) {
+    console.error("ERROR GETTING RESTOCK");
+  }
+});
+
+app.get("/excess", async (req, res) => { //Loading in the employee, in the manager side
+  res.set('Access-Control-Allow-Origin', '*');
+  try {
+    const allItems = await pool.query("SELECT * FROM items WHERE item_quantitylbs < $1;", [40])
+    res.json(allItems.rows);
+  } catch (err) {
+    console.error("ERROR GETTING RESTOCK");
+  }
+});
+
 app.post("/salesreport", async (req, res) => { //Loading in the employee, in the manager side
   res.set('Access-Control-Allow-Origin', '*');
   const {startDate, endDate, type} = req.body
@@ -250,6 +270,8 @@ app.post("/salesreport", async (req, res) => { //Loading in the employee, in the
   }
   res.json(allItems.rows); 
 });
+
+
 
 
 
