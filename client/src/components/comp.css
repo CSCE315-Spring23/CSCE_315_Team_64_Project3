@@ -111,6 +111,31 @@
   .smoothiegrid {
     transform: translate(-1%, 0%);
   }
+
+  .paynowbtn {
+    max-width: 150px;
+    transform: translate(-20%, -50%);
+  }
+
+  .purchasedbtn {
+    transform: translate(55%, -380%);
+  }
+
+  .navbar-arrow {
+    width: 24px;
+    height: 24px;
+  }
+
+  .weather-details-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .navbar-brand {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+  }
   
   
   

@@ -21,6 +21,7 @@ function CustomerPage() {
   const [cart, setCart] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
   const [productType, setProductType] = useState('Be Well');
+  const [isPurchased, setIsPurchased] = useState(false); // for purchased print
 
 
   {/* Get Smoothies from Backend */}
@@ -91,23 +92,28 @@ function CustomerPage() {
     content: () => componentRef.current,
   });
 
-  const handlePrint = () => {
-    handleReactToPrint(); 
-    let offset=0
-    const currentDate = new Date();
-    const year = currentDate.getFullYear().toString()
-    const month = ("0" + (currentDate.getMonth() + 1)).slice(-2);
-    const day = ("0" + currentDate.getDate()).slice(-2);
-    const formattedDate = `${year}-${month}-${day}`;
-    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    const dayOfWeek = daysOfWeek[currentDate.getDay()];
-    console.log(formattedDate)
-    cart.forEach(cartItem => {
-      updateTransaction(formattedDate, dayOfWeek, cartItem.totalAmount, cartItem.sm_name, offset)
-      offset+=1
-    });
-  }
-
+  // const handlePrint = useReactToPrint({
+  //   content: () => componentRef.current,
+  //   onAfterPrint: () => setIsPurchased(true)
+  // });
+  const handlePrint = () => ({
+    content: () => componentRef.current,
+    onAfterPrint: () => setIsPurchased(true)
+    // handleReactToPrint(); 
+    // let offset=0
+    // const currentDate = new Date();
+    // const year = currentDate.getFullYear().toString()
+    // const month = ("0" + (currentDate.getMonth() + 1)).slice(-2);
+    // const day = ("0" + currentDate.getDate()).slice(-2);
+    // const formattedDate = `${year}-${month}-${day}`;
+    // const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    // const dayOfWeek = daysOfWeek[currentDate.getDay()];
+    // console.log(formattedDate)
+    // cart.forEach(cartItem => {
+    //   updateTransaction(formattedDate, dayOfWeek, cartItem.totalAmount, cartItem.sm_name, offset)
+    //   offset+=1
+    // });
+  });
 
   {/* Update the cart total */}
   useEffect(() => {
@@ -202,40 +208,44 @@ function CustomerPage() {
               <div style={{display: "none"}}>
                 <ComponentToPrint cart={cart} totalAmount={totalAmount} ref={componentRef}/>
               </div>
-              <div className='table-responsive bg-dark' style={{ transform: 'scale(0.7)' }}>
-                <table className='table table-responsive table-light table-hover'>
-                  <thead>
-                    <tr>
-                      <td>#</td>
-                      <td>Name</td>
-                      <td>Price</td>
-                      <td>Qty</td>
-                      <td>Total</td>
-                      <td>Action</td>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    { cart ? cart.map((cartProduct, key) => <tr key={key}>
-                      <td>{cartProduct.sm_id}</td>
-                      <td>{cartProduct.sm_name}</td>
-                      <td>${cartProduct.sm_price}</td>
-                      <td>{cartProduct.quantity}</td>
-                      <td>${cartProduct.totalAmount}</td>
-                      <td>
-                        <button className='btn btn-danger btn-sm' onClick={() => removeProduct(cartProduct)}>Remove</button>
-                      </td>
+              <div className='table-responsive bg-dark' style={{ transform: 'scale(0.7)', height: '50vh' }}>
+                <div style={{ overflowY: 'auto', height: '100%' }}>
+                  <table className='table table-responsive table-light table-hover'>
+                    <thead>
+                      <tr>
+                        <td>#</td>
+                        <td>Name</td>
+                        <td>Price</td>
+                        <td>Qty</td>
+                        <td>Total</td>
+                        <td>Action</td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      { cart ? cart.map((cartProduct, key) => <tr key={key}>
+                        <td>{cartProduct.sm_id}</td>
+                        <td>{cartProduct.sm_name}</td>
+                        <td>${cartProduct.sm_price}</td>
+                        <td>{cartProduct.quantity}</td>
+                        <td>${cartProduct.totalAmount}</td>
+                        <td>
+                          <button className='btn btn-danger btn-sm' onClick={() => removeProduct(cartProduct)}>Remove</button>
+                        </td>
 
-                    </tr>)
+                      </tr>)
 
-                    : 'No Item in Cart'}
-                  </tbody>
-                </table>
-                <h2 className='px-2 text-white'>Total Amount: ${totalAmount.toFixed(2)}</h2>
+                      : 'No Item in Cart'}
+                    </tbody>
+                  </table>
+                </div>
+                <div className='fixed-bottom bg-dark d-flex align-items-center' style={{ height: '70px', lineHeight: '50px' }}>
+                  <h2 className='px-2 text-white'>Total Amount: ${totalAmount.toFixed(2)}</h2>
+                </div>
               </div>
 
               <div className='mt-3 plsaddmsg'>
                 { totalAmount !== 0 ? <div>
-                  <button className='btn btn-primary' onClick={handlePrint}>
+                  <button className='btn btn-primary paynowbtn' style={{ width: "110%" }} onClick={handlePrint}>
                     Pay Now
                   </button>
 
@@ -243,6 +253,9 @@ function CustomerPage() {
 
                 }
               </div>
+              {isPurchased && <div className="purchasedbtn" style={{color: 'green'}}>Purchase successful!</div>}
+
+              
         </div>
       </div>
     </MainLayout>

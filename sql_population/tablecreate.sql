@@ -42,7 +42,7 @@ CREATE TABLE employee(
 
 CREATE TABLE transactions(
     trans_id int PRIMARY KEY,
-    trans_date text,
+    trans_date TIMESTAMP,
     trans_dayofweek text,
     sm_name text,
     trans_size text,
@@ -52,7 +52,7 @@ CREATE TABLE transactions(
 
 -- pk here is also fk from transactions.... don't know how to do in sql
 CREATE TABLE transactions_summary(
-    trans_date text PRIMARY KEY,
+    trans_date TIMESTAMP PRIMARY KEY,
     transsum_dayofweek text,
     transsum_rev float,
     transsum_expenditures float,

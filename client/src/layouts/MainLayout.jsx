@@ -10,6 +10,7 @@ function MainLayout({children}) {
   const [highTemp, setHighTemp] = useState(0);
   const [lowTemp, setLowTemp] = useState(0);
   const [humidity, setHumidity] = useState(0);
+  const [showDetails, setShowDetails] = useState(false);
 
   {/* Call weather API once upon mounting */}
   useEffect(() => {
@@ -30,23 +31,53 @@ function MainLayout({children}) {
 
   return (
     <div>
-    <header>
-      <nav className="navbar navbar-light bg-secondary">
-        <div className="container">
-          <img src="https://skprod.objects.frb.io/images/static/smoothie-king-logo.svg"className="smoothie-logo" />
-          <h4>Today's weather: {weather}. Humidity: {humidity}. Low/High: {lowTemp}°F / {highTemp}°F. Now: {currTemp}°F.</h4>
-          <Link to="/" className="navbar-brand">Back to Login</Link>
-        </div>
-      </nav>
-    </header>
-    <main>
-      <div className='container mt-3'>
-        {children}
-      </div>
-      <ToastContainer/>
-    </main>
-  </div>
-  )
+      <header>
+        <nav className="navbar navbar-light bg-secondary">
+          <div className="container">
+            <img
+              src="https://skprod.objects.frb.io/images/static/smoothie-king-logo.svg"
+              className="smoothie-logo"
+            />
+            <a href="/" className="navbar-brand" style={{marginRight: '30px'}}>
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/271/271218.png?w=740&t=st=1683010785~exp=1683011385~hmac=abb8b250bf85129a9fe2483fd5503081235a550e79ccf9204d52f767d1df201e"
+                className="navbar-arrow"
+                alt="Back to Login"
+              />
+            </a>
+            <div className="weather-details-container">
+              <div
+                className="weather-icon"
+                onClick={() => setShowDetails(!showDetails)}
+              >
+                {currTemp}°F
+              </div>
+              {showDetails && (
+                <div className="weather-details">
+                  <div className="weather-detail small">Weather: {weather}</div>
+                  <div className="weather-detail small">Humidity: {humidity}</div>
+                  <div className="weather-detail small">
+                    Low/High: {lowTemp}°F / {highTemp}°F
+                  </div>
+                  <button
+                    className="close-button"
+                    onClick={() => setShowDetails(false)}
+                  >
+                    Close
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+        </nav>
+      </header>
+      <main>
+        <div className="container mt-3">{children}</div>
+        <ToastContainer />
+      </main>
+    </div>
+  );
+  
 }
 
 export default MainLayout
