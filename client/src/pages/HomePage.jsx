@@ -25,7 +25,7 @@ function HomePage() {
       console.log(response)
       console.log(response.statusText)
       if (response.statusText == 'OK') {
-        navigate('/pos')
+        navigate('/pageselect')
       } else {
         console.log("DONE")
       }
@@ -80,7 +80,7 @@ function HomePage() {
               <GoogleLogin className = 'form-control mt-1'
                 onSuccess={credentialResponse => {
                   console.log(credentialResponse);
-                  navigate('/pos')
+                  navigate('/pageselect')
                 }}
                 onError={() => {
                   console.log('Login Failed');
