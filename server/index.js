@@ -35,16 +35,16 @@ app.post("/zrepfill", async (req, res) => { //Listening for new orders to be pla
 
 app.post("/orders", async (req, res) => { //Listening for new orders to be placed
     try {
-        const { trans_date, trans_dayofweek, sm_name, trans_price} = req.body;
+        const { trans_date, trans_dayofweek, sm_name, trans_price, offset} = req.body;
         console.log(sm_name)
         let trans_id = 0
         await pool.query(
-            'SELECT COUNT(*) FROM transactions;',
+            'SELECT MAX(trans_id) FROM transactions;',
             (err, res) => {
               if (err) {
                 console.error(err);
               } else {
-                trans_id = res.rows[0].count + 1;
+                trans_id = res.rows[0].max + offset + 1;
                 console.log(trans_id)
                 const query = 'INSERT INTO transactions (trans_id, trans_date, trans_dayofweek, sm_name, trans_size, trans_price, trans_cost) VALUES ($1, $2, $3, $4, $5, $6, $7)';
                 const values = [trans_id, trans_date, trans_dayofweek, sm_name, "small", trans_price, trans_price];
@@ -53,12 +53,12 @@ app.post("/orders", async (req, res) => { //Listening for new orders to be place
             }
         );
         await pool.query(
-          'SELECT COUNT(*) FROM xrep;',
+          'SELECT MAX(xrep_id) FROM xrep;',
           (err, res) => {
             if (err) {
               console.error(err);
             } else {
-              xrep_id = res.rows[0].count + 1;
+              xrep_id = res.rows[0].max + offset + 1;
               const query = 'INSERT INTO xrep (xrep_id, xrep_items, xrep_price) VALUES ($1, $2, $3)';
               const values = [xrep_id, sm_name, trans_price];
               pool.query(query, values);
@@ -74,14 +74,14 @@ app.post("/orders", async (req, res) => { //Listening for new orders to be place
 app.post("/inventory", async (req, res) => { //Listening for added inventory items
   try {
       console.log(1)
-      const {item_quantitylbs, item_name, item_ppp} = req.body;
+      const {item_quantitylbs, item_name, item_ppp, offset} = req.body;
       await pool.query(
           'SELECT COUNT(*) FROM items;',
           (err, res) => {
             if (err) {
               console.error(err);
             } else {
-              item_id = Number(res.rows[0].count) + 1;
+              item_id = Number(res.rows[0].count) + offset;
 
               const query = 'INSERT INTO items (item_id, item_quantitylbs, item_name, item_ppp) VALUES ($1, $2, $3, $4)';
               const values = [item_id, item_quantitylbs, item_name, item_ppp];
