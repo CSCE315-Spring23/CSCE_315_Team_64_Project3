@@ -4,6 +4,13 @@ import axios from "axios"
 import { ComponentToPrint } from '../components/ComponentToPrint';
 import { useReactToPrint } from 'react-to-print';
 
+function updateTransaction(trans_date, trans_dayofweek, trans_price, sm_name, offset) {
+  return fetch('http://localhost:8000/orders', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ trans_date, trans_dayofweek, sm_name, trans_price, offset}),
+  }).then((response) => response.json());
+} 
 function CustomerPage() {
 
   {/* Define variables */}
@@ -15,6 +22,7 @@ function CustomerPage() {
   const [totalAmount, setTotalAmount] = useState(0);
   const [productType, setProductType] = useState('Be Well');
   const [isPurchased, setIsPurchased] = useState(false); // for purchased print
+
 
   /**
    * Fetches smoothies from the server / backend and sets them in the state.
@@ -131,6 +139,29 @@ function CustomerPage() {
    * @name useEffect
    * @param {array} cart - The cart state array.
    */
+  const handlePrint1 = () => {
+    let offset=0
+    const currentDate = new Date();
+    const year = currentDate.getFullYear().toString()
+    const month = ("0" + (currentDate.getMonth() + 1)).slice(-2);
+    const day = ("0" + currentDate.getDate()).slice(-2);
+    const formattedDate = `${year}-${month}-${day}`;
+    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const dayOfWeek = daysOfWeek[currentDate.getDay()];
+    console.log(formattedDate)
+    cart.forEach(cartItem => {
+      updateTransaction(formattedDate, dayOfWeek, cartItem.totalAmount, cartItem.sm_name, offset)
+      offset+=1
+    });
+  };
+
+  const handlePrints = () => {
+    handlePrint()
+    handlePrint1()
+  }
+  
+
+  {/* Update the cart total */}
   useEffect(() => {
     /**
      * Calculates the new cart total.
@@ -292,7 +323,7 @@ function CustomerPage() {
 
               <div className='mt-3 plsaddmsg'>
                 { totalAmount !== 0 ? <div>
-                  <button className='btn btn-primary paynowbtn' style={{ width: "110%" }} onClick={handlePrint}>
+                  <button className='btn btn-primary paynowbtn' style={{ width: "110%" }} onClick={handlePrints}>
                     Pay Now
                   </button>
 
@@ -300,8 +331,7 @@ function CustomerPage() {
 
                 }
               </div>
-              {isPurchased && <div className="purchasedbtn" style={{color: 'green'}}>Purchase successful!</div>}
-
+              {isPurchased && <div className="purchasedbtn" style={{color: 'green'}}>Purchase successful!</div>}s
               
         </div>
       </div>

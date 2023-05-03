@@ -6,10 +6,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React, {useEffect, useRef, useState} from 'react';
 import { Form, Button, Table } from "react-bootstrap";
 
-function SalesReport() {
-  const [best, setBest] = useState([{ Item: "Item", Sales: "0.0" }, { Item: "Item", Sales: "0.0" }, { Item: "Item", Sales: "0.0" }]);
-  const [worst, setWorst] = useState([{ Item: "Item", Sales: "0.0" }, { Item: "Item", Sales: "0.0" }, { Item: "Item", Sales: "0.0" }]);
-  const [startDate, setStartDate] = useState("2000-01-01")
+function ExcessReport() {
+  const [hasExcess, setHasExcess] = useState([{ Item: "Item", Quantity: "0" }, { Item: "Item", Quantity: "0" }]);
+  const [startDate, setStartDate] = useState("2020-01-01")
   const [endDate, setEndDate] = useState("2023-01-01")
 
   const changeStartDate = (event) => {
@@ -20,50 +19,32 @@ function SalesReport() {
   const changeEndDate = (event) => {
     setEndDate(event.target.value);
   }
-
-  async function updateBest() {
-    const type=1
+  async function handleItems() {
     try {
-      const response = await fetch("http://localhost:8000/salesreport", {
+      const response = await fetch("http://localhost:8000/excess", {
         method : "POST",
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({startDate, endDate, type}),
+        body: JSON.stringify({startDate, endDate})
       });
       const jsonData = await response.json()
-      setBest(jsonData)
+      jsonData.forEach(item => {
+        console.log(typeof(item.percent))
+        item.percent =  parseFloat(parseFloat(item.percent).toFixed(2));
+      })
+
+      setHasExcess(jsonData)
       console.log(jsonData)
     } catch (err) {
       console.log(err.message)
     }
   }
-
-  async function updateWorst() {
-    const type=0
-    try {
-      const response = await fetch("http://localhost:8000/salesreport", {
-        method : "POST",
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({startDate, endDate, type}),
-      });
-      const jsonData = await response.json()
-      setWorst(jsonData)
-      console.log(jsonData)
-    } catch (err) {
-      console.log(err.message)
-    }
-  }
-
-  function handleItems() {
-    updateBest()
-    updateWorst()
-  }
-
   return (
     <MainLayout>
       <div className="App">
         <NavbarComp/>
         <header className="App-header" style={{color: "black"}}>
-        <h1 class="inv">Sales Report</h1>
+          
+          <h1 class="inv">Excess Report</h1>
           <Form>
             <Form.Group controlId="formStartDate">
                 <Form.Label class="product">Start Date:</Form.Label>
@@ -79,36 +60,20 @@ function SalesReport() {
             </Form.Group>
             <div class="addButton"></div>
             <Button  onClick = {handleItems} class="btn btn-primary btn-lg btn-block" >
-                Query Orders
+                Query Excess Items
             </Button>
             <div class="addButton"></div>
           </Form>
-        <h2 class="inv">Best Selling Items</h2>
           <table>
             <tr>
-              <th>Item</th>
-              <th>Sales</th>
+              <th>Item:</th>
+              <th>Percent Sold:</th>
             </tr>
-            {best.map((val, key) => {
+            {hasExcess.map((val, key) => {
               return (
                 <tr key={key}>
                   <td>{val.sm_name}</td>
-                  <td>{val.count}</td>
-                </tr>
-              )
-            })}
-          </table>
-        <h2 class="inv">Worst Selling Items</h2>
-          <table>
-            <tr>
-              <th>Item</th>
-              <th>Sales</th>
-            </tr>
-            {worst.map((val, key) => {
-              return (
-                <tr key={key}>
-                  <td>{val.sm_name}</td>
-                  <td>{val.count}</td>
+                  <td>{val.percent + "%"}</td>
                 </tr>
               )
             })}
@@ -119,4 +84,4 @@ function SalesReport() {
   );
 }
 
-export default SalesReport;
+export default ExcessReport;

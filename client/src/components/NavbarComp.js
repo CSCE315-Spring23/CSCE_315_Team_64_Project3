@@ -10,7 +10,7 @@ export default function Navbar() {
     <Link to='/rrep' class="btn btn-outline-success me-2" type="button">Restock Report</Link>
     <Link to='/erep' class="btn btn-outline-success me-2" type="button">Excess Report</Link>
     <Link to='/xrep' class="btn btn-outline-success me-2" type="button">X Report</Link>
-    <button class="btn btn-outline-success me-2" type="button">Z Report</button>
+    <Link to='/zrep' class="btn btn-outline-success me-2" type="button">Z Report</Link>
     <Link to='/' class="btn btn-outline-success me-2" type="button">Log Out</Link>
   </form>
 </nav>
