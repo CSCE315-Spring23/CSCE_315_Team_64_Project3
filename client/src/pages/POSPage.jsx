@@ -4,6 +4,15 @@ import axios from "axios"
 import { ComponentToPrint } from '../components/ComponentToPrint';
 import { useReactToPrint } from 'react-to-print';
 
+/**
+ * Updates a transaction by sending a POST request to the server.
+ * @param {string} trans_date - The date of the transaction.
+ * @param {string} trans_dayofweek - The day of the week of the transaction.
+ * @param {number} trans_price - The price of the transaction.
+ * @param {string} sm_name - The name of the smoothie.
+ * @param {number} offset - Used for creating transactions and makes it easier in the backend (indexing and etc)
+ * @returns {Promise<object>} A Promise that resolves to the JSON response from the server.
+ */
 function updateTransaction(trans_date, trans_dayofweek, trans_price, sm_name, offset) {
   return fetch('http://localhost:8000/orders', {
     method: 'POST',
@@ -19,6 +28,13 @@ function POSPage() {
   const [cart, setCart] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
 
+  /**
+   * Fetches smoothies from the server / backend and sets them in the state.
+   * @async
+   * @function
+   * @returns {Promise<void>} Promise that resolves when the products have been fetched and set in the state.
+   * @throws {Error} If there is an error fetching the products.
+   */
   const fetchProducts = async() => {
     try {
       const response = await fetch("http://localhost:8000/smoothies")
@@ -35,6 +51,17 @@ function POSPage() {
   useEffect(() => {
     fetchProducts();
   }, [])
+
+  /**
+   * Adds a smoothie product to the customer's cart.
+   * @async
+   * @function
+   * @param {Object} product - The smoothie product to be added to the cart.
+   * @param {string} product.sm_id - The unique ID of the smoothie product.
+   * @param {number} product.sm_price - The price of the smoothie product.
+   * @returns {Promise<void>} Promise that resolves when the smoothie product has been added to the cart.
+   * @throws {Error} If there is an error adding the smoothie product to the cart.
+   */
   const addProductToCart = async(product) => {
     let findProductInCart = await cart.find(i=>{
       return i.sm_id === product.sm_id
@@ -70,6 +97,10 @@ function POSPage() {
 
   }
 
+  /**
+   * Removes a smoothie from the customer's cart
+   * @param {object} product - The smoothie to remove from the cart
+   */
   const removeProduct = async(product) =>{
     const newCart =cart.filter(cartItem => cartItem.sm_id !== product.sm_id);
     setCart(newCart);
@@ -81,6 +112,10 @@ function POSPage() {
     content: () => componentRef.current,
   });
 
+  /**
+   * Handles the printing of the component and updates the transaction for each item in the cart.
+   * @returns {void}
+   */
   const handlePrint = () => {
     handleReactToPrint(); 
     let offset=0
@@ -102,11 +137,25 @@ function POSPage() {
     fetchProducts();
   },[]);
 
+  /**
+   * Updates the cart total when the cart changes.
+   * @function
+   * @name useEffect
+   * @param {array} cart - The cart state array.
+   */
   useEffect(() => {
+    /**
+     * Calculates the new cart total.
+     * @type {number}
+     */
     let newTotalAmount = 0;
     cart.forEach(icart => {
       newTotalAmount = newTotalAmount + parseFloat(icart.totalAmount);
     })
+    /**
+     * Sets the new cart total.
+     * @type {number}
+     */
     setTotalAmount(newTotalAmount);
   },[cart])
 
