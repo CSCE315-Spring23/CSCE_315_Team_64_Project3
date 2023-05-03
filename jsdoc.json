@@ -1,0 +1,21 @@
+{
+    "source": {
+        "include": [
+            "client/",
+            "server/"
+          ],
+      "exclude": ["./node_modules"]
+    },
+    "opts": {
+      "recurse": true,
+      "destination": "./docs"
+    },
+    "plugins": [
+      "plugins/markdown"
+    ],
+    "markdown": {
+      "parser": "gfm",
+      "hardwrap": true
+    }
+  }
+  
