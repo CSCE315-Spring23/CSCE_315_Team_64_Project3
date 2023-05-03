@@ -73,15 +73,16 @@ app.post("/orders", async (req, res) => { //Listening for new orders to be place
 app.post("/inventory", async (req, res) => { //Listening for added inventory items
   try {
       console.log(1)
-      const {item_quantitylbs, item_name, item_ppp, offset} = req.body;
+      const {item_quantitylbs, item_name, item_ppp} = req.body;
       await pool.query(
-          'SELECT COUNT(*) FROM items;',
+          'SELECT MAX(item_id) FROM items;',
           (err, res) => {
             if (err) {
               console.error(err);
             } else {
-              item_id = Number(res.rows[0].count) + offset;
-
+              console.log(res.rows[0].max)
+              item_id = parseInt(res.rows[0].max) + 1;
+              console.log(item_id)
               const query = 'INSERT INTO items (item_id, item_quantitylbs, item_name, item_ppp) VALUES ($1, $2, $3, $4)';
               const values = [item_id, item_quantitylbs, item_name, item_ppp];
               pool.query(query, values);
@@ -125,8 +126,6 @@ app.post("/employees", async (req, res) => { //Listening for added inventory ite
       res.status(500).send('Internal server error');
   }
 });
-
-
 app.post("/oauth", async (req, res) => {
     const {emailText, passwordText} = req.body
     await pool.query('SELECT * FROM oauth WHERE oauth_email = $1 AND oauth_pass = $2', [emailText, passwordText], 
@@ -171,6 +170,25 @@ app.delete("/inventory", async (req, res) => { //Listening for deleted inventory
       const {item_id} = req.body
       await pool.query(
           'DELETE FROM items WHERE item_id = $1', [item_id], 
+          (err, res) => {
+            if (err) {
+              console.error(err);
+            } else {
+              console.log("Item deleted successfully")
+            }
+          }
+      );
+  } catch (err) {
+      console.error(err);
+      res.status(500).send('Internal server error');
+  }
+});
+
+app.delete("/employees", async (req, res) => { //Listening for deleted inventory items
+  try {
+      const {emp_name} = req.body
+      await pool.query(
+          'DELETE FROM employee WHERE emp_name = $1', [emp_name], 
           (err, res) => {
             if (err) {
               console.error(err);
