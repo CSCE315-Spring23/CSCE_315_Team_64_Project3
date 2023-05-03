@@ -1,11 +1,39 @@
-import React, {useEffect, useRef, useState} from 'react'
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/CustomerPage.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/CustomerPage.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, {useEffect, useRef, useState} from 'react'
 import MainLayout from '../layouts/MainLayout'
 import axios from "axios"
 import { ComponentToPrint } from '../components/ComponentToPrint';
 import { useReactToPrint } from 'react-to-print';
 
 function updateTransaction(trans_date, trans_dayofweek, trans_price, sm_name, offset) {
-  return fetch('https://team64backend.onrender.com/orders', {
+  return fetch('http://localhost:8000/orders', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ trans_date, trans_dayofweek, sm_name, trans_price, offset}),
@@ -28,12 +56,12 @@ function CustomerPage() {
    * Fetches smoothies from the server / backend and sets them in the state.
    * @async
    * @function
-   * @returns {Promise<void>} Promise that resolves when the products have been fetched and set in the state.
+   * @returns {Promise&lt;void>} Promise that resolves when the products have been fetched and set in the state.
    * @throws {Error} If there is an error fetching the products.
    */
   const fetchProducts = async() => {
     try {
-      const response = await fetch("https://team64backend.onrender.com/smoothies")
+      const response = await fetch("http://localhost:8000/smoothies")
       const jsonData = await response.json()
       setProducts(jsonData)
       console.log(jsonData)
@@ -53,7 +81,7 @@ function CustomerPage() {
    * @param {Object} product - The smoothie product to be added to the cart.
    * @param {string} product.sm_id - The unique ID of the smoothie product.
    * @param {number} product.sm_price - The price of the smoothie product.
-   * @returns {Promise<void>} Promise that resolves when the smoothie product has been added to the cart.
+   * @returns {Promise&lt;void>} Promise that resolves when the smoothie product has been added to the cart.
    * @throws {Error} If there is an error adding the smoothie product to the cart.
    */
   const addProductToCart = async(product) =>{
@@ -232,111 +260,133 @@ function CustomerPage() {
 
   {/* Main page HTML */}
   return (
-    <MainLayout>
-    <div id="google_translate_element"></div>
-      <h1>Self-Order</h1>
-      <div className='row'>
-        <h5>Smoothie Types</h5>
-      </div>
-      <div className="row">
-        <div className="col-lg-10">
+    &lt;MainLayout>
+    &lt;div id="google_translate_element">&lt;/div>
+      &lt;h1>Self-Order&lt;/h1>
+      &lt;div className='row'>
+        &lt;h5>Smoothie Types&lt;/h5>
+      &lt;/div>
+      &lt;div className="row">
+        &lt;div className="col-lg-10">
             
-          <div className="row mb-3">
-            <div className="col-lg-2 btn btn-rounded" onClick={() => setProductType('Coffee')}>
+          &lt;div className="row mb-3">
+            &lt;div className="col-lg-2 btn btn-rounded" onClick={() => setProductType('Coffee')}>
                 Coffee
-            </div>
-            <div className="col-lg-2 btn btn-rounded" onClick={() => setProductType('Strawberry')}>
+            &lt;/div>
+            &lt;div className="col-lg-2 btn btn-rounded" onClick={() => setProductType('Strawberry')}>
                 Strawberry
-            </div>
-            <div className="col-lg-2 btn btn-rounded" onClick={() => setProductType('Blueberry')}>
+            &lt;/div>
+            &lt;div className="col-lg-2 btn btn-rounded" onClick={() => setProductType('Blueberry')}>
                 Blueberry
-            </div>
-            <div className="col-lg-2 btn btn-rounded" onClick={() => setProductType('Greens')}>
+            &lt;/div>
+            &lt;div className="col-lg-2 btn btn-rounded" onClick={() => setProductType('Greens')}>
                 Greens
-            </div>
-            <div className="col-lg-2 btn btn-rounded" onClick={() => setProductType('Mango')}>
+            &lt;/div>
+            &lt;div className="col-lg-2 btn btn-rounded" onClick={() => setProductType('Mango')}>
                 Mango
-            </div>
-            <div className="col-lg-2 btn btn-rounded" onClick={() => setProductType('Raspberry')}>
+            &lt;/div>
+            &lt;div className="col-lg-2 btn btn-rounded" onClick={() => setProductType('Raspberry')}>
                 Raspberry
-            </div>
-          </div>
+            &lt;/div>
+          &lt;/div>
   
           {isLoading ? (
             'Loading'
           ) : (
-            <div className='row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 g-0 gy-0 my-0 smoothiegrid' style={{ marginBottom: '0'}}>
+            &lt;div className='row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 g-0 gy-0 my-0 smoothiegrid' style={{ marginBottom: '0'}}>
               {products.map((product, key) => {
                 if (product.sm_type == productType) {
                   return (
-                    <div key={key} className='col-lg-3 mb-2 smoothie-item'>
-                        <div className='pos-item px-0 text-center border' style={{fontSize: '9px', height: 'auto'}} onClick={() => addProductToCart(product)}>
-                            <p>{product.sm_name}</p>
-                            <img src={product.sm_img} className="img-fluid" style={{width: '60%'}} alt={product.sm_name} />
-                            <p>${product.sm_price}</p>
-                        </div>
-                    </div>
+                    &lt;div key={key} className='col-lg-3 mb-2 smoothie-item'>
+                        &lt;div className='pos-item px-0 text-center border' style={{fontSize: '9px', height: 'auto'}} onClick={() => addProductToCart(product)}>
+                            &lt;p>{product.sm_name}&lt;/p>
+                            &lt;img src={product.sm_img} className="img-fluid" style={{width: '60%'}} alt={product.sm_name} />
+                            &lt;p>${product.sm_price}&lt;/p>
+                        &lt;/div>
+                    &lt;/div>
                   );
                 }
               })}
-            </div>
+            &lt;/div>
           )}
-        </div>
-        <div className='col-lg-4 parent-element' style={{ transform: 'translateX(50px)' }}>
-              <div style={{display: "none"}}>
-                <ComponentToPrint cart={cart} totalAmount={totalAmount} ref={componentRef}/>
-              </div>
-              <div className='table-responsive bg-dark' style={{ transform: 'scale(0.7)', height: '50vh' }}>
-                <div style={{ overflowY: 'auto', height: '100%' }}>
-                  <table className='table table-responsive table-light table-hover'>
-                    <thead>
-                      <tr>
-                        <td>#</td>
-                        <td>Name</td>
-                        <td>Price</td>
-                        <td>Qty</td>
-                        <td>Total</td>
-                        <td>Action</td>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      { cart ? cart.map((cartProduct, key) => <tr key={key}>
-                        <td>{cartProduct.sm_id}</td>
-                        <td>{cartProduct.sm_name}</td>
-                        <td>${cartProduct.sm_price}</td>
-                        <td>{cartProduct.quantity}</td>
-                        <td>${cartProduct.totalAmount}</td>
-                        <td>
-                          <button className='btn btn-danger btn-sm' onClick={() => removeProduct(cartProduct)}>Remove</button>
-                        </td>
+        &lt;/div>
+        &lt;div className='col-lg-4 parent-element' style={{ transform: 'translateX(50px)' }}>
+              &lt;div style={{display: "none"}}>
+                &lt;ComponentToPrint cart={cart} totalAmount={totalAmount} ref={componentRef}/>
+              &lt;/div>
+              &lt;div className='table-responsive bg-dark' style={{ transform: 'scale(0.7)', height: '50vh' }}>
+                &lt;div style={{ overflowY: 'auto', height: '100%' }}>
+                  &lt;table className='table table-responsive table-light table-hover'>
+                    &lt;thead>
+                      &lt;tr>
+                        &lt;td>#&lt;/td>
+                        &lt;td>Name&lt;/td>
+                        &lt;td>Price&lt;/td>
+                        &lt;td>Qty&lt;/td>
+                        &lt;td>Total&lt;/td>
+                        &lt;td>Action&lt;/td>
+                      &lt;/tr>
+                    &lt;/thead>
+                    &lt;tbody>
+                      { cart ? cart.map((cartProduct, key) => &lt;tr key={key}>
+                        &lt;td>{cartProduct.sm_id}&lt;/td>
+                        &lt;td>{cartProduct.sm_name}&lt;/td>
+                        &lt;td>${cartProduct.sm_price}&lt;/td>
+                        &lt;td>{cartProduct.quantity}&lt;/td>
+                        &lt;td>${cartProduct.totalAmount}&lt;/td>
+                        &lt;td>
+                          &lt;button className='btn btn-danger btn-sm' onClick={() => removeProduct(cartProduct)}>Remove&lt;/button>
+                        &lt;/td>
 
-                      </tr>)
+                      &lt;/tr>)
 
                       : 'No Item in Cart'}
-                    </tbody>
-                  </table>
-                </div>
-                <div className='fixed-bottom bg-dark d-flex align-items-center' style={{ height: '70px', lineHeight: '50px' }}>
-                  <h2 className='px-2 text-white'>Total Amount: ${totalAmount.toFixed(2)}</h2>
-                </div>
-              </div>
+                    &lt;/tbody>
+                  &lt;/table>
+                &lt;/div>
+                &lt;div className='fixed-bottom bg-dark d-flex align-items-center' style={{ height: '70px', lineHeight: '50px' }}>
+                  &lt;h2 className='px-2 text-white'>Total Amount: ${totalAmount.toFixed(2)}&lt;/h2>
+                &lt;/div>
+              &lt;/div>
 
-              <div className='mt-3 plsaddmsg'>
-                { totalAmount !== 0 ? <div>
-                  <button className='btn btn-primary paynowbtn' style={{ width: "110%" }} onClick={handlePrints}>
+              &lt;div className='mt-3 plsaddmsg'>
+                { totalAmount !== 0 ? &lt;div>
+                  &lt;button className='btn btn-primary paynowbtn' style={{ width: "110%" }} onClick={handlePrints}>
                     Pay Now
-                  </button>
+                  &lt;/button>
 
-                </div> : 'Please add a product to the cart'
+                &lt;/div> : 'Please add a product to the cart'
 
                 }
-              </div>
-              {isPurchased && <div className="purchasedbtn" style={{color: 'green'}}>Purchase successful!</div>}s
+              &lt;/div>
+              {isPurchased &amp;&amp; &lt;div className="purchasedbtn" style={{color: 'green'}}>Purchase successful!&lt;/div>}s
               
-        </div>
-      </div>
-    </MainLayout>
+        &lt;/div>
+      &lt;/div>
+    &lt;/MainLayout>
   )
 }
 
-export default CustomerPage
+export default CustomerPage</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#XReport">XReport</a></li><li><a href="global.html#ZReport">ZReport</a></li><li><a href="global.html#addTranslateScript">addTranslateScript</a></li><li><a href="global.html#checkLogin">checkLogin</a></li><li><a href="global.html#clearXReport">clearXReport</a></li><li><a href="global.html#googleTranslateElementInit">googleTranslateElementInit</a></li><li><a href="global.html#updateBest">updateBest</a></li><li><a href="global.html#updateTransaction">updateTransaction</a></li><li><a href="global.html#updateWorst">updateWorst</a></li><li><a href="global.html#updateZReport">updateZReport</a></li><li><a href="global.html#useEffect">useEffect</a></li><li><a href="global.html#useWeather">useWeather</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue May 02 2023 23:39:14 GMT-0500 (Central Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
