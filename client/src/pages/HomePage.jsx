@@ -28,13 +28,15 @@ function HomePage() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({emailText, passwordText}),
       })
-      console.log("DONE")
-      console.log(response)
-      console.log(response.status)
-      if (parseInt(response.status) == 200) {
-        navigate('/pageselect')
+      const jsonData = await response.json()
+      if (jsonData[0].oauth_view == "server") {
+        navigate('/pos')
+      } else if (jsonData[0].oauth_view == "manager") {
+        navigate('/man')
+      } else if (jsonData[0].oauth_view == "customer") {
+        navigate('/customer')
       } else {
-        console.log("DONE")
+        navigate('/menu')
       }
     } catch (err) {
       console.log(err.message)

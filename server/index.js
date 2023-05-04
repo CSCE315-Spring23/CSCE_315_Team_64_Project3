@@ -165,24 +165,12 @@ app.post("/employees", async (req, res) => { //Listening for added inventory ite
  * @param {Object} res - The response object.
  * @returns {void}
  */
+
+
 app.post("/oauth", async (req, res) => {
     const {emailText, passwordText} = req.body
-    await pool.query('SELECT * FROM oauth WHERE oauth_email = $1 AND oauth_pass = $2', [emailText, passwordText], 
-      (err, res1) => {
-        if (err) {
-          console.error(err);
-        } else {
-          console.log("Authentication occurred")
-          if (res1.rows.length > 0) {
-            res.status(200).json({ message: 'Authentication successful' });
-          } else {
-            res.status(401).json({ message: 'Invalid credentials' });
-          }
-          console.log(res1.rows.length)
-        }
-      }
-    );
-
+    const user = await pool.query('SELECT * FROM oauth WHERE oauth_email = $1 AND oauth_pass = $2', [emailText, passwordText], );
+    res.json(user.rows)
 });
 
 /**
