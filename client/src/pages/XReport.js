@@ -50,11 +50,9 @@ function XReport() {
    */
   
   const handlePrint = () => {
-    let offset = 0
     data.forEach(dataItem => {
       console.log(dataItem.xrep_id)
-      updateZReport(dataItem.xrep_id, dataItem.xrep_items, dataItem.xrep_price, offset)
-      offset+=1
+      updateZReport(dataItem.xrep_id, dataItem.xrep_items, dataItem.xrep_price, 0)
     });
     clearXReport();
   }

@@ -23,6 +23,27 @@ function CustomerPage() {
   const [productType, setProductType] = useState('Be Well');
   const [isPurchased, setIsPurchased] = useState(false); // for purchased print
 
+  const tts = () => {
+
+    const speech = new SpeechSynthesisUtterance("");
+  
+    speech.lang = "en-US";
+    console.log(window.speechSynthesis)
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(speech); 
+    let words="Here is your receipt : "
+    cart.forEach(cartItem => {
+        words += "Smoothie Name : "
+        words += cartItem.sm_name + "."
+        words += "Quantity : "
+        words += String(cartItem.quantity) + "."
+    });
+    words += "Total : "
+    words += String(totalAmount)
+    speech.text=words
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(speech);  
+  };
 
   /**
    * Fetches smoothies from the server / backend and sets them in the state.
@@ -106,32 +127,10 @@ function CustomerPage() {
 
   const componentRef = useRef();
 
-  const handleReactToPrint = useReactToPrint({
-    content: () => componentRef.current,
-  });
-
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
     onAfterPrint: () => setIsPurchased(true)
   });
-  // const handlePrint = () => {
-  //   content: () => componentRef.current,
-  //   onAfterPrint: () => setIsPurchased(true)
-  //   handleReactToPrint(); 
-  //   let offset=0
-  //   const currentDate = new Date();
-  //   const year = currentDate.getFullYear().toString()
-  //   const month = ("0" + (currentDate.getMonth() + 1)).slice(-2);
-  //   const day = ("0" + currentDate.getDate()).slice(-2);
-  //   const formattedDate = `${year}-${month}-${day}`;
-  //   const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-  //   const dayOfWeek = daysOfWeek[currentDate.getDay()];
-  //   console.log(formattedDate)
-  //   cart.forEach(cartItem => {
-  //     updateTransaction(formattedDate, dayOfWeek, cartItem.totalAmount, cartItem.sm_name, offset)
-  //     offset+=1
-  //   });
-  // }
 
   /**
    * Updates the cart total when the cart changes.
@@ -140,6 +139,7 @@ function CustomerPage() {
    * @param {array} cart - The cart state array.
    */
   const handlePrint1 = () => {
+    tts()
     let offset=0
     const currentDate = new Date();
     const year = currentDate.getFullYear().toString()

@@ -259,25 +259,6 @@ app.delete("/employees", async (req, res) => { //Listening for deleted inventory
   }
 });
 
-app.delete("/employees", async (req, res) => { //Listening for deleted inventory items
-  try {
-      const {emp_name} = req.body
-      await pool.query(
-          'DELETE FROM employee WHERE emp_name = $1', [emp_name], 
-          (err, res) => {
-            if (err) {
-              console.error(err);
-            } else {
-              console.log("Item deleted successfully")
-            }
-          }
-      );
-  } catch (err) {
-      console.error(err);
-      res.status(500).send('Internal server error');
-  }
-});
-
 /**
  * Retrieve all smoothies in the database.
  * Called when the customer and server pages are loaded.

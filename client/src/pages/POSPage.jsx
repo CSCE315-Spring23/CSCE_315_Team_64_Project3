@@ -20,6 +20,7 @@ function updateTransaction(trans_date, trans_dayofweek, trans_price, sm_name, of
     body: JSON.stringify({ trans_date, trans_dayofweek, sm_name, trans_price, offset}),
   }).then((response) => response.json());
 } 
+
  
 function POSPage() {
 
@@ -27,6 +28,28 @@ function POSPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [cart, setCart] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
+
+  const tts = () => {
+
+    const speech = new SpeechSynthesisUtterance("");
+  
+    speech.lang = "en-US";
+    console.log(window.speechSynthesis)
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(speech); 
+    let words="Here is your receipt : "
+    cart.forEach(cartItem => {
+        words += "Smoothie Name : "
+        words += cartItem.sm_name + "."
+        words += "Quantity : "
+        words += String(cartItem.quantity) + "."
+    });
+    words += "Total : "
+    words += String(totalAmount)
+    speech.text=words
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(speech);  
+  };
 
   /**
    * Fetches smoothies from the server / backend and sets them in the state.
@@ -118,6 +141,7 @@ function POSPage() {
    */
   const handlePrint = () => {
     handleReactToPrint(); 
+    tts()
     let offset=0
     const currentDate = new Date();
     const year = currentDate.getFullYear().toString()
